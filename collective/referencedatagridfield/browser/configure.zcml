@@ -1,0 +1,23 @@
+<configure
+    xmlns="http://namespaces.zope.org/browser"
+    xmlns:zope="http://namespaces.zope.org/zope"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="atreferencebrowserwidget">
+
+  <!-- pages and views -->
+
+  <page
+      name="refdatagridbrowser_popup"
+      permission="zope2.Public"
+      for="*"
+      class=".view.ReferenceDataGridBrowserPopup"
+      />
+
+  <zope:adapter
+      for="Products.Five.BrowserView"
+      factory=".view.datagridref_popup_template"
+      name="datagridref_popup"
+      provides="zope.formlib.namedtemplate.INamedTemplate"
+      />
+
+</configure>

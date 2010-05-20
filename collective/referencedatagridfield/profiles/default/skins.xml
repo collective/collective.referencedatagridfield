@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+ <object name="referencedatagridfield" meta_type="Filesystem Directory View"
+    directory="collective.referencedatagridfield:skins/referencedatagridfield"/>
+  <skin-path name="*">
+  <layer name="referencedatagridfield" insert-after="custom"/>
+ </skin-path>
+</object>

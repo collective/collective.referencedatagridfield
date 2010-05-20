@@ -1,0 +1,129 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+
+<body>
+
+    <metal:define define-macro="edit_manipulators"
+        tal:define="helper nocall:here/refbrowserhelper;
+                    overlay_id string:atrb_${fieldId}">
+    
+     	 <tal:manipulator-cells>
+     	 	
+     	 	<tal:comment replace="nothing">
+	             IE doesn't seem to respect em unit paddings here so we
+	             use absolute pixel paddings.
+          	</tal:comment>
+
+          	<tal:comment replace="nothing">
+          		<!-- Add reference -->
+          	</tal:comment>
+
+		<td class="datagridwidget-manipulator"
+		    tal:define="multiValued python:0;">
+
+		  <div style="clear: both"
+		      tal:define="
+			  global at_url at_url|python:'/'.join(here.getPhysicalPath());
+			  startup_directory python:helper.getStartupDirectory(field);
+			  field_id string:uid_${fieldId};
+			  field_link_id string:link_${fieldId};
+			  field_title_id string:title_${fieldId};
+			  ">
+		    <input type="button" class="searchButton addreference" value="Add..."
+			   i18n:attributes="value label_add;"
+			   tal:define="popup_width widget/popup_width|string:500;
+				       popup_height widget/popup_height|string:550;"
+			   tal:attributes="src string:${startup_directory}/refdatagridbrowser_popup?fieldName=${field_id}&fieldRealName=${field/getName}&at_url=${at_url}&fieldTitleName=${field_title_id}&fieldLinkName=${field_link_id};
+				       rel string:#${overlay_id}" />
+		       </div><div id="atrb" tal:attributes="id overlay_id" class="overlay overlay-ajax">
+		       <div class="pb-ajax">
+			 <!-- <a href="" i18n:translate="referencebrowser_back" class="refbrowser_back">Back</a> -->
+			 <div class="overlaycontent" style="font-size: 125%"></div>
+			 <!-- <a href="" i18n:translate="referencebrowser_back" class="refbrowser_back">Back</a> -->
+		       </div>
+		       </div>
+
+		</td>
+
+          	<tal:comment replace="nothing">
+          		<!-- Insert -->	        
+          	</tal:comment>
+
+	         <td class="datagridwidget-manipulator"
+	         	tal:condition="python: widget.isInsertEnabled(context, field)">
+	             <img tal:attributes="
+	                  	src string:${portal_url}/add_row_icon.gif;
+	                  	"
+	                  alt="Add row"  
+	                  onclick="dataGridFieldFunctions.addReferenceDataGridRowAfter(this); return false"/>
+	         </td>          	
+
+          	<tal:comment replace="nothing">
+          		<!-- Delete -->	        
+          	</tal:comment>    
+	         <td  class="datagridwidget-manipulator"
+	         	tal:condition="python: widget.isDeleteEnabled(context, field)">
+	             <img tal:attributes="
+	                  	src string:${portal_url}/delete_row_icon.gif;
+	                  	"
+	                  alt="Delete row"  
+	                  onclick="dataGridFieldFunctions.removeFieldRow(this);return false"/>
+	         </td>
+		    
+          	<tal:comment replace="nothing">
+          		<!-- Move up -->	        
+          	</tal:comment>    	    
+		    <td class="datagridwidget-manipulator">
+	
+		       <img tal:attributes="
+		             	src string:${portal_url}/move_row_up_icon.gif;
+		             	" 
+		             alt="Move row up"  
+		             tal:condition="python: widget.isReorderEnabled(context, field)"
+		             onclick="dataGridFieldFunctions.moveRowUp(this);return false"/>
+		                                                    
+		    </td>
+		    
+          	<tal:comment replace="nothing">
+          		<!-- Move down -->	        
+          	</tal:comment>    	    		    
+		    <td class="datagridwidget-manipulator">
+		    
+		    	<img tal:attributes="
+		             	src string:${portal_url}/move_row_down_icon.gif;
+		             	" 
+		             alt="Move row down"  
+		             tal:condition="python: widget.isReorderEnabled(context, field)"
+		             onclick="dataGridFieldFunctions.moveRowDown(this);return false"/>
+		             
+		    </td>
+		    
+
+          	<tal:comment replace="nothing">
+          		<!-- The index field of this row -->	        
+          	</tal:comment>    	    		    
+		    <td class="datagridwidget-hidden-data">
+
+			   <tal:ordering-field tal:condition="newRow">
+	               <input type="hidden"
+	                       value="template_row_marker"
+	                       tal:attributes="name string:${fieldName}.orderindex_:records;
+	                                       id string:orderindex__${fieldId};" />
+				</tal:ordering-field>	  		    
+				
+			   <tal:ordering-field tal:condition="not: newRow">
+			       <input type="hidden"
+			               tal:attributes="name string:${fieldName}.orderindex_:records;
+			                               id string:orderindex__${fieldId};
+			                               value repeat/rows/number;" />    
+			   </tal:ordering-field>                                    							    
+		    </td>
+		        
+		</tal:manipulator-cells>
+    </metal:define>
+</body>
+
+</html>   
