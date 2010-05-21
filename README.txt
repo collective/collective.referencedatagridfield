@@ -20,7 +20,7 @@ This product was developed by Quintagroup for Plone collective, sponsored by Hea
 Supported Plone Version
 -----------------------
 
-Plone 4.0.
+Plone 4.0
 
 Usage
 -----
@@ -30,10 +30,10 @@ http://svn.plone.org/svn/collective/collective.referencedatagridfield/collective
 
 With this package your content types might get sophisiticated related items field: include related items from the current site and external ones.
 
-1. Internal Links - to insert internal link use 'Add...' button and browse your site for the necessary object you want to add. 
+1. *Internal Links* - to insert internal link use 'Add...' button and browse your site for the necessary object you want to add. 
 Type in desirable title into the Title field. If you leave it empty - it will automatically be filled with the inserted object title.
 
-2. External Links - to insert external links type in external URL into the Links field. Type in full address with  http:// protocol. 
+2. *External Links* - to insert external links type in external URL into the Links field. Type in full address with  http:// protocol. 
 In case your URL is not correct it will not be saved. Type in desirable title into the Title field. If you leave it empty - it will 
 get title the same as URL.
 
@@ -45,7 +45,7 @@ Andriy Mylenkyy
 Links
 -----
 
-SVN Repository - http://svn.plone.org/svn/collective/collective.referencedatagridfield
-Documentation - http://projects.quintagroup.com/products/wiki/collective.referencedatagridfield
+* SVN Repository - http://svn.plone.org/svn/collective/collective.referencedatagridfield
+* Documentation - http://projects.quintagroup.com/products/wiki/collective.referencedatagridfield
 
 
