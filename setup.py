@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.2'
+version = '0.1'
 
 setup(name='collective.referencedatagridfield',
       version=version,
-      description="Mix of Reference and DataGrid fields",
+      description="Mix of Reference and DataGrid Fields",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from
@@ -16,7 +16,7 @@ setup(name='collective.referencedatagridfield',
         ],
       keywords='archetypes referencebrowser datagrid field widget relation',
       author='Quintagroup [Andriy Mylenkyi]',
-      author_email='talk@quintagroup.com',
+      author_email='support@quintagroup.com',
       url='http://svn.plone.org/svn/collective/collective.referencedatagridfield',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
