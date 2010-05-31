@@ -12,6 +12,14 @@ or override existing Reference field functionality with a custom one.
 
 Required Products.DataGridField package is automatically installed during installation procedure.
 
+Usage
+-----
+
+This package can be used for extending Plone default Related content functionality. Apart from possibility to add related items from the current website, collective.referencedatagridfield allows to:
+
+* add custom title to the related item instead of its real title
+* add external sources as related items 
+
 Development
 -----------
 
@@ -22,11 +30,11 @@ Supported Plone Version
 
 Plone 4.0
 
-Usage
------
+Use Case
+--------
 
 There is an example of simple content type creation with a mix of Reference and DataGrid fields as related items included into the package:
-http://svn.plone.org/svn/collective/collective.referencedatagridfield/collective/referencedatagridfield/examples/ReferenceDataGridDemoType.py
+http://svn.plone.org/svn/collective/collective.referencedatagridfield/trunk/collective/referencedatagridfield/examples/ReferenceDataGridDemoType.py
 
 With this package your content types might get sophisiticated related items field: include related items from the current site and external ones.
 
