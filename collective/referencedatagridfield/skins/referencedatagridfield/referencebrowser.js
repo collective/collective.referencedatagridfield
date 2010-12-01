@@ -9,7 +9,7 @@ function prepareRefPopup(context) {
 	       // close overlay, if there is one already
 	       // we only allow one referencebrowser per time
 	       if (ov) {ov.close(); }
-	       var wrap = this.getContent().find('.overlaycontent');
+	       var wrap = this.getOverlay().find('.overlaycontent');
 	       var src = this.getTrigger().attr('src');
 	       var srcfilter = src + ' >*';
 	       wrap.data('srcfilter', srcfilter);
@@ -49,7 +49,8 @@ function prepareRefPopup(context) {
 	  var fieldlink = wrap.find('input[name=fieldLinkName]').attr('value');
 	  var multi = wrap.find('input[name=multiValued]').attr('value');
 	  var close_window = wrap.find('input[name=close_window]').attr('value');
-	  var title = target.parents('tr').find('img').attr('alt');
+	  //var title = target.parents('tr').find('img').attr('alt');
+          var title = target.parent().next('td').find('strong').html();
 	  var linkpath = target.parents('tr').find('img').attr('rel');
 	  var active_tr = wrap.parents('tr[id=datagridwidget-row]');
 	  var uid = target.attr('rel');
@@ -74,6 +75,18 @@ function prepareRefPopup(context) {
 	  refreshOverlay(wrap, srcfilter, '');
 	  return false;
 	  });
+
+  // the pagination links
+  jq('[id^=atrb_] div.listingBar a').live('click', function(event) {
+      var target = jq(this);
+      var src = target.attr('href');
+      var wrap = target.parents('.overlaycontent');
+      var srcfilter = src + ' >*';
+      refreshOverlay(wrap, srcfilter, '');
+      return false;
+      });
+
+
 
       // the search form
       jq('[id^=atrb_] form#search input[name=submit]', context).live('click', function(event) {
