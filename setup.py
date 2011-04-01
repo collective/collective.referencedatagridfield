@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.1'
+version = '0.2'
 
 setup(name='collective.referencedatagridfield',
       version=version,
@@ -13,6 +13,8 @@ setup(name='collective.referencedatagridfield',
       classifiers=[
         "Framework :: Plone",
         "Programming Language :: Python",
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'License :: OSI Approved :: GNU General Public License (GPL)',
         ],
       keywords='archetypes referencebrowser datagrid field widget relation',
       author='Quintagroup [Andriy Mylenkyi]',
@@ -36,6 +38,4 @@ setup(name='collective.referencedatagridfield',
       [z3c.autoinclude.plugin]
       target = plone
       """,
-      # setup_requires=["PasteScript"],
-      # paster_plugins=["ZopeSkel"],
       )

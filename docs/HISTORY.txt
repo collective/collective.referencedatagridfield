@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.2 (April 1, 2011)
+-------------------
+
+- JS fixed for compatibility with archetypes.referencebrowserwidget >= 2.0rc2
+
 0.1 (May 21, 2010)
 ------------------
 
