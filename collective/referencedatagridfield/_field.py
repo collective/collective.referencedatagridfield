@@ -32,7 +32,7 @@ class ReferenceDataGridWidget(DataGridWidget, ReferenceBrowserWidget):
     _properties.update({
         'macro': "referencedatagridwidget",
         'helper_css': ('datagridwidget.css','referencedatagridwidget.css'),
-        'helper_js': ('referencebrowser.js', 'datagridwidget.js', 'referencedatagridwidget.js'),
+        'helper_js': ('datagridwidget.js', 'referencedatagridwidget.js'),
         'force_close_on_insert': True,
         'popup_name': 'datagridref_popup',
         'columns': {
