@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.3 (April 4, 2011)
+-------------------
+
+- Clashing of JS with default referencebrowserwidget fixed
+
+- Minor fixes in templates and in javascripts
+
 0.2 (April 1, 2011)
 -------------------
 
