@@ -21,19 +21,23 @@
                   available_indexes widget/available_indexes;
                   allow_browse widget/allow_browse;
                   image_portal_types widget/image_portal_types;
-                  image_method widget/image_method|string:;
+                  image_method widget/image_method|string:image_icon;
                   ">
 
-    <dl id="message" class="portalMessage info"
-         style="display:none; margin-top:0;">
-      <dt i18n:translate="referencebrowser_text_added_reference"
-        >Added</dt>
-      <dd id="messageTitle"></dd>
-    </dl>
+    <div id="messageWrapper" style="position: relative">
+      <div style="position: absolute; width: 100%">
+        <dl id="messageAdded" class="portalMessage info"
+            style="display:none; margin-top:0">
+          <dt i18n:translate="referencebrowser_text_added_reference"
+              >Added</dt>
+          <dd></dd>
+        </dl>
+      </div>
+    </div>
 
     <!-- Search form -->
     <form action="search" method="post" name="search" id="search"
-          style="text-align: right"
+          style="text-align: right;"
           tal:condition="widget/allow_search"
           tal:attributes="action request/getURL">
 
@@ -119,9 +123,9 @@
            tal:define="isRTL here/@@plone_portal_state/is_rtl;"
            style="margin-bottom: 1em">
 
-        You are here:
-        <tal:crumbs tal:repeat="
-            crumb python:view.breadcrumbs(widget.startup_directory)">
+        <span id="breadcrumbs-you-are-here" i18n:domain="plone"
+            i18n:translate="you_are_here">You are here:</span>
+        <tal:crumbs tal:repeat="crumb python:view.breadcrumbs(widget.startup_directory)">
 
         <a class="browsesite"
             tal:attributes="href crumb/absolute_url;
@@ -162,7 +166,8 @@
 
         <td>
           <tal:referenceable tal:condition="referenceable">
-            <input type="checkbox" class="insertreference" tal:attributes="rel uid" />
+            <input type="checkbox" class="insertreferencedatagrid" tal:attributes="rel uid" />
+            <input type="hidden" tal:attributes="rel item/getPath" />
           </tal:referenceable>
         </td>
 
@@ -171,11 +176,12 @@
                tal:attributes="src string:${item/getURL}/$image_method"
                />
         </td>
-        <td>
+        <td tal:attributes="class python:'contenttype-' + item.portal_type.lower()">
           <img src="#"
+               tal:condition="item/getIcon"
                tal:attributes="src string:${here/portal_url}/${item/getIcon};
-			       alt title_or_id;
-			       rel item/getPath;" />
+                               alt title_or_id;
+                               rel item/getPath;" />
           <a class="browsesite" tal:condition="python: item.is_folderish and allow_browse"
              tal:attributes="
              href python:view.genRefBrowserUrl(item.getURL());

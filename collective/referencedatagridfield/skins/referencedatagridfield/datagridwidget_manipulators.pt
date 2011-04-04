@@ -32,17 +32,18 @@
 			  field_link_id string:link_${fieldId};
 			  field_title_id string:title_${fieldId};
 			  ">
-		    <input type="button" class="searchButton addreference" value="Add..."
+		    <input type="button" class="searchButton addreferencedatagrid" value="Add..."
 			   i18n:attributes="value label_add;"
 			   tal:define="popup_width widget/popup_width|string:500;
 				       popup_height widget/popup_height|string:550;"
 			   tal:attributes="src string:${startup_directory}/refdatagridbrowser_popup?fieldName=${field_id}&fieldRealName=${field/getName}&at_url=${at_url}&fieldTitleName=${field_title_id}&fieldLinkName=${field_link_id};
 				       rel string:#${overlay_id}" />
 		       </div><div id="atrb" tal:attributes="id overlay_id" class="overlay overlay-ajax">
+		       <div class="close"><span>Close</span></div>
 		       <div class="pb-ajax">
-			 <!-- <a href="" i18n:translate="referencebrowser_back" class="refbrowser_back">Back</a> -->
-			 <div class="overlaycontent" style="font-size: 125%"></div>
-			 <!-- <a href="" i18n:translate="referencebrowser_back" class="refbrowser_back">Back</a> -->
+                 <!-- <a href="" i18n:translate="referencebrowser_back" class="refbrowser_back">Back</a> -->
+                 <div class="overlaycontent" style="font-size: 125%"></div>
+                 <!-- <a href="" i18n:translate="referencebrowser_back" class="refbrowser_back">Back</a> -->
 		       </div>
 		       </div>
 
