@@ -89,11 +89,12 @@ class ReferenceDataGridField(DataGridField, ReferenceField):
 
         result = []
         for row in value:
-            data = {"title":"", "link":"", "uid":""}
-
+            data = {}
+            for key in [key for key in set(row) if not(key.startswith('_') or key.endswith('_'))]:
+                data[key] = str(row[key]).strip()
             uid = str(row.get("uid", "")).strip()
             link = str(row.get("link", "")).strip()
-            title = str(row.get('title', ""))
+            title = str(row.get("title", ""))
 
             if not title == "":
                 data["title"] = title
@@ -137,23 +138,23 @@ class ReferenceDataGridField(DataGridField, ReferenceField):
         result = []
         uids = {}
         rows = DataGridField.get(self, instance, **kwargs)
+
         for row in rows:
             uid = row.get("uid","")
             link = row.get("link","")
             title = row.get("title","")
-            result.append({
-                # DataGridField row data
-                "uid": uid, "link": link, "title": title,
-                # View data
-                "url": "", "default_title": None})
+            dataGridFieldRowData = row
+            dataGridFieldRowData["url"] = ""
+            dataGridFieldRowData["default_title"] = None
+            result.append(dataGridFieldRowData) 
             data = result[-1]
             # Process remote URL and collect UIDs
             if link:
                 data["url"] = quote(link, safe='?$#@/:=+;$,&%')
                 data["default_title"] = link
-                # if title not set for remote url - set it equals to url
+                # if title not set for remote url - set it equals to title of remote object
                 if not data["title"]:
-                    data["title"] = data["default_title"]
+                    data["title"] = catalog(UID=uid)[0].Title
             else:
                 uids[uid] = data
         # Process UIDs
@@ -170,7 +171,6 @@ class ReferenceDataGridField(DataGridField, ReferenceField):
             # Remove records with links to unexistent objects
             del_uids = set(uids.keys()) - set([b.UID for b in brains])
             result = filter(lambda r: not r["uid"] in del_uids, result)
-
         return result
 
 
