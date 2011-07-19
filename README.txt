@@ -15,7 +15,8 @@ Required Products.DataGridField package is automatically installed during instal
 Usage
 -----
 
-This package can be used for extending Plone default Related content functionality. Apart from possibility to add related items from the current website, collective.referencedatagridfield allows to:
+This package can be used for extending Plone default Related content functionality. Apart from possibility to add 
+related items from the current website, collective.referencedatagridfield allows to:
 
 * add custom title to the related item instead of its real title
 * add external sources as related items 
@@ -48,8 +49,15 @@ get title the same as URL.
 Author
 ------
 
-Andriy Mylenkyy 
-Roman Kozlovskyi
+* Andriy Mylenkyy
+* Roman Kozlovskyi
+* Volodymyr Cherepanyak
+
+Thanks
+------
+
+* gauthier_bastien
+* emasker
 
 Links
 -----

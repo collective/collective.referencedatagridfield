@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.4 (July 19, 2011)
+-------------------
+
+- Merged the more-columns branch
+
+- The default title for manual links is the the link
+
 0.3 (April 4, 2011)
 -------------------
 

@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.3'
+version = '0.4'
 
 setup(name='collective.referencedatagridfield',
       version=version,
@@ -17,7 +17,7 @@ setup(name='collective.referencedatagridfield',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         ],
       keywords='archetypes referencebrowser datagrid field widget relation',
-      author='Quintagroup [Andriy Mylenkyi]',
+      author='Quintagroup',
       author_email='support@quintagroup.com',
       url='http://svn.plone.org/svn/collective/collective.referencedatagridfield',
       license='GPL',
