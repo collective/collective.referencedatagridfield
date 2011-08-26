@@ -114,8 +114,8 @@ class ReferenceDataGridField(DataGridField, ReferenceField):
                 brain = brains[0]
                 data["uid"] = uid
                 # Fix title for uid
-                if data['title'] == getattr(brain, "Title", ""):
-                    data['title'] = ""
+#                if data['title'] == getattr(brain, "Title", ""):
+#                    data['title'] = ""
             result.append(data)
 
         DataGridField.set(self, instance, result, **kwargs)

@@ -176,7 +176,7 @@
                tal:attributes="src string:${item/getURL}/$image_method"
                />
         </td>
-        <td tal:attributes="class python:'contenttype-' + item.portal_type.lower()">
+        <td tal:attributes="class python:'referenceItemResult contenttype-' + item.portal_type.lower()">
           <img src="#"
                tal:condition="item/getIcon"
                tal:attributes="src string:${here/portal_url}/${item/getIcon};

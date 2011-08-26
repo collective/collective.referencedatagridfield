@@ -53,7 +53,9 @@ a.referencedatagridwidget-add-button, a.referencedatagridwidget-add-button:hover
     float: right;	
 }
 
-
+.group td.referenceItemResult{
+	text-align:left;
+}
 /* 
   </dtml-with>  (end of loaded base_properties variables)
 */

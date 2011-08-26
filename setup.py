@@ -27,7 +27,7 @@ setup(name='collective.referencedatagridfield',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'Products.DataGridField>=1.8a1',
+          'Products.DataGridField',
           'archetypes.referencebrowserwidget>=2.0a',
           # 'Products.ATReferenceBrowserWidget>=3.0a',
           # -*- Extra requirements: -*-
