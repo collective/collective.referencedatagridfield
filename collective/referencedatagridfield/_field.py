@@ -148,16 +148,16 @@ class ReferenceDataGridField(DataGridField, ReferenceField):
             dataGridFieldRowData["default_title"] = None
             result.append(dataGridFieldRowData) 
             data = result[-1]
-            # Process remote URL and collect UIDs
-            if link:
+            if uid:
+                uids[uid] = data
+            else:
+                # Process remote URL and collect UIDs
                 data["url"] = quote(link, safe='?$#@/:=+;$,&%')
                 data["default_title"] = link
                 # if title not set for remote url - set it equals to url
                 # manually entered link does not have title column field
                 if not data["title"]:
                     data["title"] = data["default_title"]
-            else:
-                uids[uid] = data
         # Process UIDs
         if uids:
             brains = catalog(UID=uids.keys())
