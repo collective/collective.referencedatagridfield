@@ -8,7 +8,7 @@
 
     <metal:define define-macro="edit_manipulators"
         tal:define="helper nocall:here/refbrowserhelper;
-                    overlay_id string:atrb_${fieldId}">
+                    overlay_id string:atdgrb_${fieldId}">
         <tal:comment replace="nothing">
                  Check if we are on a ReferenceDataGridWidget.  If so, use the patched code above,
                  if not (we are on a DataGridWidget), then call the classic DataGridWidget macro

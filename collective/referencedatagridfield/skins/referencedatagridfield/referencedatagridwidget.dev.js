@@ -25,7 +25,7 @@ function prepareRefPopup(context) {
         });
 
         // the breadcrumb-links and the links of the 'tree'-navigation
-        jq('[id^=atrb_] a.browsesite', context).live('click', function (event) {
+        jq('[id^=atdgrb_] a.browsesite', context).live('click', function (event) {
             var target = jq(this);
             var src = target.attr('href');
             var wrap = target.parents('.overlaycontent');
@@ -43,7 +43,7 @@ function prepareRefPopup(context) {
         });
 
         // the links for inserting referencens
-        jq('[id^=atrb_] input.insertreferencedatagrid', context).live('click', function (event) {
+        jq('[id^=atdgrb_] input.insertreferencedatagrid', context).live('click', function (event) {
             var target = jq(this);
             var wrap = target.parents('.overlaycontent');
             var fieldname = wrap.find('input[name=fieldName]').attr('value');
@@ -67,17 +67,17 @@ function prepareRefPopup(context) {
         });
 
         // the history menu
-        jq('[id^=atrb_] form#history select[name=path]', context).live('change', function (event) {
+        jq('[id^=atdgrb_] form#history select[name=path]', context).live('change', function (event) {
             var target = jq(this);
             var wrap = target.parents('.overlaycontent');
-            src = jq('[id^=atrb_] form#history select[name=path] :selected', this).attr('value');
+            src = jq('[id^=atdgrb_] form#history select[name=path] :selected', this).attr('value');
             var srcfilter = src + ' >*';
             refreshOverlay(wrap, srcfilter, '');
             return false;
         });
 
         // the pagination links
-        jq('[id^=atrb_] div.listingBar a').live('click', function (event) {
+        jq('[id^=atdgrb_] div.listingBar a').live('click', function (event) {
             var target = jq(this);
             var src = target.attr('href');
             var wrap = target.parents('.overlaycontent');
@@ -87,7 +87,7 @@ function prepareRefPopup(context) {
         });
 
         // the search form
-        jq('[id^=atrb_] form#search input[name=submit]', context).live('click', function (event) {
+        jq('[id^=atdgrb_] form#search input[name=submit]', context).live('click', function (event) {
             var target = jq(this);
             var src = target.parents('form').attr('action');
             var wrap = target.parents('.overlaycontent');
@@ -352,26 +352,26 @@ function submitHistoryForm() {
 }
 
 function pushToHistory(url) {
-    var history = jq(document).data('atrb_history');
+    var history = jq(document).data('atdgrb_history');
     history.push(url);
-    jq(document).data('atrb_history', history);
+    jq(document).data('atdgrb_history', history);
 }
 
 function resetHistory() {
-    jq(document).data('atrb_history', []);
+    jq(document).data('atdgrb_history', []);
 }
 
 function popFromHistory() {
-    var history = jq(document).data('atrb_history');
+    var history = jq(document).data('atdgrb_history');
     value = history.pop();
-    jq(document).data('atrb_history', history);
+    jq(document).data('atdgrb_history', history);
     return value;
 }
 
 function refreshOverlay(wrap, srcfilter, newoption) {
-    var oldhistory = jq('[id^=atrb_] form#history select');
+    var oldhistory = jq('[id^=atdgrb_] form#history select');
     wrap.load(srcfilter, function () {
-        jq('[id^=atrb_] form#history select').append(newoption + oldhistory.html());
+        jq('[id^=atdgrb_] form#history select').append(newoption + oldhistory.html());
         ov = jq('div#content').data('overlay');
         widget_id = ov.getTrigger().attr('rel').substring(6);
         disablecurrentrelations(widget_id);
@@ -436,7 +436,7 @@ dataGridFieldFunctions.updateOrderIndex = function (tbody) {
         new_ov_id = base_id + "_" + idx;
         ov.attr("rel", new_ov_id);
         // Update target box id - it must be equal to rel attribute
-        jq("div[id^=atrb_]", tr).attr("id", new_ov_id.substring(1));
+        jq("div[id^=atdgrb_]", tr).attr("id", new_ov_id.substring(1));
     }
 
 }
