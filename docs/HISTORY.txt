@@ -1,12 +1,17 @@
 Changelog
 =========
 
+0.5 (September, 12 2011)
+------------------------
+
+- fixed compatibility issues with Plone 4.1
+
 0.4 (July 19, 2011)
 -------------------
 
-- Merged the more-columns branch
+- Merged the more-columns branch [chervol]
 
-- The default title for manual links is the the link
+- The default title for manual links is the the link [chervol]
 
 0.3 (April 4, 2011)
 -------------------

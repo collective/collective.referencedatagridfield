@@ -29,7 +29,7 @@ This product was developed by Quintagroup for Plone collective, sponsored by Hea
 Supported Plone Version
 -----------------------
 
-Plone 4.0
+Plone 4.0 - 4.1
 
 Use Case
 --------
