@@ -1,103 +1,14 @@
-function prepareRefPopup(context){
-    jq(function(){
-        jq('.addreferencedatagrid', context).overlay({
-            closeOnClick: false,
-            onBeforeLoad: function(){
-                ov = jq('div#content').data('overlay');
-                if (ov) {
-                    ov.close();
-                }
-                var wrap = this.getOverlay().find('.overlaycontent');
-                var src = this.getTrigger().attr('src');
-                var srcfilter = src + ' >*';
-                wrap.data('srcfilter', srcfilter);
-                jq('div#content').data('overlay', this);
-                resetHistory();
-                wrap.load(srcfilter);
-            },
-            onLoad: function(){
-                widget_id = this.getTrigger().attr('rel').substring(6);
-                disablecurrentrelations(widget_id);
-            }
-        });
-        jq('[id^=atrb_] a.browsesite', context).live('click', function(event){
-            var target = jq(this);
-            var src = target.attr('href');
-            var wrap = target.parents('.overlaycontent');
-            var srcfilter = src + ' >*';
-            pushToHistory(wrap.data('srcfilter'));
-            wrap.data('srcfilter', srcfilter);
-            var newoption = '<option value="' + src + '">' + target.attr('rel') + '</option>';
-            refreshOverlay(wrap, srcfilter, newoption);
-            return false;
-        });
-        jq('[id^=atrb_] input.insertreferencedatagrid', context).live('click', function(event){
-            var target = jq(this);
-            var wrap = target.parents('.overlaycontent');
-            var fieldname = wrap.find('input[name=fieldName]').attr('value');
-            var fieldtitle = wrap.find('input[name=fieldTitleName]').attr('value');
-            var fieldlink = wrap.find('input[name=fieldLinkName]').attr('value');
-            var multi = wrap.find('input[name=multiValued]').attr('value');
-            var close_window = wrap.find('input[name=close_window]').attr('value');
-            var title = target.parent().next('td').find('strong').html();
-            var linkpath = target.next('input').attr('rel');
-            var active_tr = wrap.parents('tr[id=datagridwidget-row]');
-            var uid = target.attr('rel');
-            refdatagridbrowser_setReference(fieldname, uid, title, parseInt(multi), active_tr, fieldtitle, title, fieldlink, linkpath);
-            if (close_window === '1') {
-                overlay = jq('div#content').data('overlay');
-                overlay.close();
-            }
-            else {
-                showMessageRDG(title);
-            };
-            jq(this).attr('disabled', 'disabled');
-        });
-        jq('[id^=atrb_] form#history select[name=path]', context).live('change', function(event){
-            var target = jq(this);
-            var wrap = target.parents('.overlaycontent');
-            src = jq('[id^=atrb_] form#history select[name=path] :selected', this).attr('value');
-            var srcfilter = src + ' >*';
-            refreshOverlay(wrap, srcfilter, '');
-            return false;
-        });
-        jq('[id^=atrb_] div.listingBar a').live('click', function(event){
-            var target = jq(this);
-            var src = target.attr('href');
-            var wrap = target.parents('.overlaycontent');
-            var srcfilter = src + ' >*';
-            refreshOverlay(wrap, srcfilter, '');
-            return false;
-        });
-        jq('[id^=atrb_] form#search input[name=submit]', context).live('click', function(event){
-            var target = jq(this);
-            var src = target.parents('form').attr('action');
-            var wrap = target.parents('.overlaycontent');
-            var fieldname = wrap.find('input[name=fieldName]').attr('value');
-            var fieldtitle = wrap.find('input[name=fieldTitleName]').attr('value');
-            var fieldlink = wrap.find('input[name=fieldLinkName]').attr('value');
-            var fieldrealname = wrap.find('input[name=fieldRealName]').attr('value');
-            var at_url = wrap.find('input[name=at_url]').attr('value');
-            var searchvalue = wrap.find('input[name=searchValue]').attr('value');
-            var multi = wrap.find('input[name=multiValued]').attr('value');
-            var close_window = wrap.find('input[name=close_window]').attr('value');
-            qs = 'searchValue=' + searchvalue + '&fieldRealName=' + fieldrealname + '&fieldName=' + fieldname + '&multiValued=' + multi + '&close_window=' + close_window + '&at_url=' + at_url + '&fieldTitleName=' + fieldtitle + '&fieldLinkName=' + fieldlink;
-            var srcfilter = src + '?' + qs + ' >*';
-            pushToHistory(wrap.data('srcfilter'));
-            wrap.data('srcfilter', srcfilter);
-            refreshOverlay(wrap, srcfilter, '');
-            return false;
-        });
-    });
-};
-jq(document).ready(function(){
-    prepareRefPopup(this);
-});
-jq.fn.prepRefPopup = function(){
-    prepareRefPopup(this);
-};
-function disablecurrentrelations(widget_id){
-    jq('ul#' + widget_id + ' :input').each(function(intIndex){
+function referencedatagrid_openBrowser(button, path, fieldName, at_url, fieldRealName, fieldTitleName, fieldLinkName, fieldUID)
+{
+	var timestamp=new Date().getTime();
+	var button_class="selButton-" + timestamp;
+	jq(button).toggleClass(button_class);
+    atrefpopup = window.open(path + '/datagridreference_popup?sel_button=' + button_class + '&fieldName=' + fieldName + '&fieldRealName=' + fieldRealName +'&at_url=' + at_url + '&widget_title_id=' + fieldTitleName + '&widget_link_id=' + fieldLinkName + '&widget_id=' + fieldUID ,'referencebrowser_popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=550');
+}
+
+
+function disablecurrentrelations(widget_id) {
+    jq('ul#' + widget_id + ' :input').each(function (intIndex) {
         uid = jq(this).attr('value');
         cb = jq('input[rel=' + uid + ']');
         cb.attr('disabled', 'disabled');
@@ -105,9 +16,10 @@ function disablecurrentrelations(widget_id){
     });
 }
 
-function refdatagridbrowser_setReference(widget_id, uid, label, multi, active_tr, widget_title_id, link_title, widget_link_id, link_path){
-    var element = null, label_element = null, current_values = null, i = null, list = null, li = null, input = null, up_element = null, down_element = null, container = null;
-    if (typeof(active_tr) != "undefined" && typeof(link_title) != "undefined" && typeof(link_path) != "undefined" && typeof(widget_title_id) != "undefined" && typeof(widget_link_id) != "undefined") {
+function refdatagridbrowser_setReference(widget_id, uid, label, multi, active_button, widget_title_id, link_title, widget_link_id, link_path) {
+	var element = null, label_element = null, current_values = null, i = null, list = null, li = null, input = null, up_element = null, down_element = null, container = null;
+    var active_tr = jq('input.'+active_button).parents('tr[id=datagridwidget-row]');
+	if (typeof(active_tr) != "undefined" && typeof(link_title) != "undefined" && typeof(link_path) != "undefined" && typeof(widget_title_id) != "undefined" && typeof(widget_link_id) != "undefined") {
         jq('#' + widget_id, active_tr).attr("value", uid);
         title = jq('#' + widget_title_id, active_tr);
         title.attr("value", link_title);
@@ -158,7 +70,7 @@ function refdatagridbrowser_setReference(widget_id, uid, label, multi, active_tr
                 up_element = document.createElement('a');
                 up_element.title = 'Move Up';
                 up_element.innerHTML = '▲';
-                up_element.onclick = function(){
+                up_element.onclick = function () {
                     refdatagridbrowser_moveReferenceUp(this);
                     return false;
                 };
@@ -166,7 +78,7 @@ function refdatagridbrowser_setReference(widget_id, uid, label, multi, active_tr
                 down_element = document.createElement('a');
                 down_element.title = 'Move Down';
                 down_element.innerHTML = '▼';
-                down_element.onclick = function(){
+                down_element.onclick = function () {
                     refdatagridbrowser_moveReferenceDown(this);
                     return false;
                 };
@@ -179,7 +91,7 @@ function refdatagridbrowser_setReference(widget_id, uid, label, multi, active_tr
         }
 }
 
-function refdatagridbrowser_removeReference(widget_id, multi){
+function refdatagridbrowser_removeReference(widget_id, multi) {
     var x = null, element = null, label_element = null, list = null;
     if (multi) {
         list = document.getElementById(widget_id);
@@ -198,7 +110,7 @@ function refdatagridbrowser_removeReference(widget_id, multi){
     }
 }
 
-function refdatagridbrowser_moveReferenceUp(self){
+function refdatagridbrowser_moveReferenceUp(self) {
     var elem = self.parentNode, eid = null, pos = null, widget_id = null, newelem = null, prevelem = null, arrows = null, cbs = null;
     if (elem === null) {
         return false;
@@ -216,10 +128,10 @@ function refdatagridbrowser_moveReferenceUp(self){
     }
     prevelem = document.getElementById('ref-' + widget_id + '-' + (pos - 1));
     arrows = newelem.getElementsByTagName("a");
-    arrows[0].onclick = function(){
+    arrows[0].onclick = function () {
         refdatagridbrowser_moveReferenceUp(this);
     };
-    arrows[1].onclick = function(){
+    arrows[1].onclick = function () {
         refdatagridbrowser_moveReferenceDown(this);
     };
     elem.parentNode.insertBefore(newelem, prevelem);
@@ -228,7 +140,7 @@ function refdatagridbrowser_moveReferenceUp(self){
     prevelem.id = 'ref-' + widget_id + '-' + pos;
 }
 
-function refdatagridbrowser_moveReferenceDown(self){
+function refdatagridbrowser_moveReferenceDown(self) {
     var elem = self.parentNode, eid = null, pos = null, widget_id = null, current_values = null, newelem = null, nextelem = null, cbs = null, arrows = null;
     if (elem === null) {
         return false;
@@ -246,10 +158,10 @@ function refdatagridbrowser_moveReferenceDown(self){
         cbs[0].checked = elem.getElementsByTagName("input")[0].checked;
     }
     arrows = newelem.getElementsByTagName("a");
-    arrows[0].onclick = function(){
+    arrows[0].onclick = function () {
         refdatagridbrowser_moveReferenceUp(this);
     };
-    arrows[1].onclick = function(){
+    arrows[1].onclick = function () {
         refdatagridbrowser_moveReferenceDown(this);
     };
     nextelem = document.getElementById('ref-' + widget_id + '-' + (pos + 1));
@@ -259,51 +171,41 @@ function refdatagridbrowser_moveReferenceDown(self){
     nextelem.id = 'ref-' + widget_id + '-' + pos;
 }
 
-function showMessageRDG(message){
+function showMessageRDG(message) {
     jq('#messageTitle').text(message);
     jq('#message').show();
 }
 
-function submitHistoryForm(){
+function submitHistoryForm() {
     var form = document.history;
     var path = form.path.options[form.path.selectedIndex].value;
     form.action = path;
     form.submit();
 }
 
-function pushToHistory(url){
+function pushToHistory(url) {
     var history = jq(document).data('atrb_history');
     history.push(url);
     jq(document).data('atrb_history', history);
 }
 
-function resetHistory(){
+function resetHistory() {
     jq(document).data('atrb_history', []);
 }
 
-function popFromHistory(){
+function popFromHistory() {
     var history = jq(document).data('atrb_history');
     value = history.pop();
     jq(document).data('atrb_history', history);
     return value;
 }
 
-function refreshOverlay(wrap, srcfilter, newoption){
-    var oldhistory = jq('[id^=atrb_] form#history select');
-    wrap.load(srcfilter, function(){
-        jq('[id^=atrb_] form#history select').append(newoption + oldhistory.html());
-        ov = jq('div#content').data('overlay');
-        widget_id = ov.getTrigger().attr('rel').substring(6);
-        disablecurrentrelations(widget_id);
-    });
-}
-
-dataGridFieldFunctions.addReferenceDataGridRow = function(id){
+dataGridFieldFunctions.addReferenceDataGridRow = function (id) {
     this.addRow(id);
     var active_row = jq("#datagridwidget-tbody-" + id + " tr#datagridwidget-row:last");
     jq(active_row).prepRefPopup();
 }
-dataGridFieldFunctions.addReferenceDataGridRowAfter = function(currnode){
+dataGridFieldFunctions.addReferenceDataGridRowAfter = function (currnode) {
     this.addRowAfter(currnode);
     var tbody = jq(currnode).parents("[id^=datagridwidget-tbody-]");
     var rows = jq("#datagridwidget-row", tbody);
@@ -312,7 +214,7 @@ dataGridFieldFunctions.addReferenceDataGridRowAfter = function(currnode){
     jq(active_row).prepRefPopup();
 }
 dataGridFieldFunctions.OriginalUpdateOrderIndex = dataGridFieldFunctions.updateOrderIndex;
-dataGridFieldFunctions.updateOrderIndex = function(tbody){
+dataGridFieldFunctions.updateOrderIndex = function (tbody) {
     var rows, tr, idx, ov, ov_id, under_idx, new_ov_id
     this.OriginalUpdateOrderIndex(tbody);
     rows = jq("#datagridwidget-row", tbody);
@@ -329,7 +231,7 @@ dataGridFieldFunctions.updateOrderIndex = function(tbody){
         jq("div[id^=atrb_]", tr).attr("id", new_ov_id.substring(1));
     }
 }
-function triggerTitleClass(e){
+function triggerTitleClass(e) {
     var element = jq(e.target);
     var current = element.attr("value");
     var initial = element.attr("default_value");
@@ -343,6 +245,6 @@ function triggerTitleClass(e){
     }
 }
 
-function triggerOnFocusStyles(e){
+function triggerOnFocusStyles(e) {
     jq(e.target).attr("class", "changed-title-field")
 }

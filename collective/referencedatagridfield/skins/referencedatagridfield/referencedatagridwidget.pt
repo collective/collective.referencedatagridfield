@@ -76,7 +76,9 @@
 
             <a class="referencedatagridwidget-add-button" id="datagridwidget-add-button"
 			   tal:condition="field/allow_insert"
-                   tal:attributes='onclick python: "dataGridFieldFunctions.addReferenceDataGridRow(\"" + field.getName() + "\")"'>Add new</a>
+			       i18n:translate="label_add"
+				   i18n:domain="atreferencebrowserwidget"
+                   tal:attributes='onclick python: "dataGridFieldFunctions.addReferenceDataGridRow(\"" + field.getName() + "\")"'>Add...</a>
 
 			<tal:comment replace="nothing">
 				<!-- Button that allowes creation of the initial row when DGF is empty -->

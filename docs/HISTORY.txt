@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.4.1-RTPlone3 (2011/10/26)
+-------------------------
+- fixed compatibility with IE: the overlay doesn't works fine and i replaced it with a popup window like browser widget [micecchi]
+
 0.4-RTPlone3 (2011/10/03)
 -------------------------
 - fixed compatibility with Plone 3 [micecchi]

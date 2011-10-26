@@ -26,23 +26,6 @@ input.changed-title-field {
         color: black;
 }
 
-
-/*  ___Start__ Hover functionality */
-.ArchetypesReferenceDataGridWidget table.referencedatagridwidget-table-edit img {
-    visibility: hidden;
-/*    background-color: &dtml-backgroundColor;*/
-}
-
-*html .ArchetypesReferenceDataGridWidget table.referencedatagridwidget-table-edit td.datagridwidget-manipulator img {
-    visibility: visible;
-}
-
-.ArchetypesReferenceDataGridWidget table.referencedatagridwidget-table-edit tr:hover img {
-    visibility: visible;
-}
-/*  ___END__ Hover functionality */
- 
-
 a.referencedatagridwidget-add-button, a.referencedatagridwidget-add-button:hover {
 	text-decoration: none;
     background: &dtml-globalBackgroundColor; url(&dtml-portal_url;/linkOpaque.gif) 9px 1px no-repeat;
