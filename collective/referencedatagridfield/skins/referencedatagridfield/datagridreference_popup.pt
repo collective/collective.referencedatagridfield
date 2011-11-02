@@ -69,7 +69,7 @@
                       b_start request/b_start | b_start;
                       Batch python:modules['Products.CMFPlone'].Batch;
 					  site_id python:context.portal_url.getPortalObject().getId();
-                      site_url python:context.portal_url().rstrip('/%s' %site_id)">
+                      site_url python:context.portal_url().rstrip('/')">
 
         <tal:if condition="python: history_length > 0">
             <tal:insert define="dummy python: context.referencebrowser_insertHistory(request['PATH_TRANSLATED'], history_length)"/>
