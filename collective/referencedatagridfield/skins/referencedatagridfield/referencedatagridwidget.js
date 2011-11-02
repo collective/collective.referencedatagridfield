@@ -202,35 +202,11 @@ function popFromHistory() {
 
 dataGridFieldFunctions.addReferenceDataGridRow = function (id) {
     this.addRow(id);
-    var active_row = jq("#datagridwidget-tbody-" + id + " tr#datagridwidget-row:last");
-    jq(active_row).prepRefPopup();
 }
 dataGridFieldFunctions.addReferenceDataGridRowAfter = function (currnode) {
     this.addRowAfter(currnode);
-    var tbody = jq(currnode).parents("[id^=datagridwidget-tbody-]");
-    var rows = jq("#datagridwidget-row", tbody);
-    var curr_row = jq(currnode).parents("tr#datagridwidget-row");
-    var active_row = rows[rows.index(curr_row) - 1];
-    jq(active_row).prepRefPopup();
 }
-dataGridFieldFunctions.OriginalUpdateOrderIndex = dataGridFieldFunctions.updateOrderIndex;
-dataGridFieldFunctions.updateOrderIndex = function (tbody) {
-    var rows, tr, idx, ov, ov_id, under_idx, new_ov_id
-    this.OriginalUpdateOrderIndex(tbody);
-    rows = jq("#datagridwidget-row", tbody);
-    for (var i = 0; i < rows.length; ++i) {
-        tr = rows[i];
-        order_tag = jq("input[id^=orderindex__]", tr);
-        idx = order_tag.attr("value");
-        ov = jq("input.addreferencedatagrid", tr);
-        ov_id = ov.attr("rel");
-        under_idx = ov_id.lastIndexOf("_");
-        base_id = (under_idx >= 0) ? ov_id.substring(0, under_idx) : "#atrb";
-        new_ov_id = base_id + "_" + idx;
-        ov.attr("rel", new_ov_id);
-        jq("div[id^=atrb_]", tr).attr("id", new_ov_id.substring(1));
-    }
-}
+
 function triggerTitleClass(e) {
     var element = jq(e.target);
     var current = element.attr("value");

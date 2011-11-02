@@ -12,7 +12,7 @@
     <!-- EDIT -->
     <metal:edit_cell_macro define-macro="edit_cell">
        <tal:visible condition="python:columnd['visible']">
-       <input style="width: 100%" name="myfield.name:records"
+       <input style="width: 350px" name="myfield.name:records"
                        tal:attributes="name string:${fieldName}.${column}:records;
                                        id string:${column}_${fieldId};
                                        value cell_value;
@@ -21,7 +21,7 @@
                        type="text" />
        </tal:visible>
        <tal:hidden condition="python:not columnd['visible']">
-       <input style="width: 100%" name="myfield.name:records"
+       <input style="width: 350px" name="myfield.name:records"
                        tal:attributes="name string:${fieldName}.${column}:records;
                                        id string:${column}_${fieldId};
                                        value cell_value;

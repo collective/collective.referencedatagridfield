@@ -39,6 +39,12 @@ a.referencedatagridwidget-add-button, a.referencedatagridwidget-add-button:hover
 .group td.referenceItemResult{
 	text-align:left;
 }
+
+/**:first-child+html table.referencedatagridwidget-table-edit td.datagridwidget-cell,
+*:first-child+html table.referencedatagridwidget-table-edit td.datagridwidget-cell input{
+	width:auto;
+}*/
+
 /* 
   </dtml-with>  (end of loaded base_properties variables)
 */
