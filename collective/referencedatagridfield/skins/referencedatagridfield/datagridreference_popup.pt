@@ -212,7 +212,7 @@
                 <img tal:attributes="src string:${here/portal_url}/logoIcon.gif"/>
                 <tal:if condition="not: restrict_browsing_to_startup_directory">
                     <a i18n:translate="tabs_home"
-                       tal:attributes="href string:${navroot}/${template/getId}?fieldName=${fieldName}&amp;fieldRealName=${fieldRealName}&amp;at_url=${at_url}">
+                       tal:attributes="href string:${navroot}/${template/getId}?fieldName=${fieldName}&amp;fieldRealName=${fieldRealName}&amp;at_url=${at_url}&amp;sel_button=${sel_button}&amp;widget_id=${widget_id}&amp;widget_title_id=${widget_title_id}&amp;widget_link_id=${widget_link_id}">
                         Home
                     </a>
 
@@ -225,7 +225,7 @@
  
                 <tal:crums tal:repeat="crumb crumbs">            
 
-                    <a tal:attributes="href string:${crumb/absolute_url}/${template/getId}?fieldName=${fieldName}&amp;fieldRealName=${fieldRealName}&amp;at_url=${at_url}">
+                    <a tal:attributes="href string:${crumb/absolute_url}/${template/getId}?fieldName=${fieldName}&amp;fieldRealName=${fieldRealName}&amp;at_url=${at_url}&amp;sel_button=${sel_button}&amp;widget_id=${widget_id}&amp;widget_title_id=${widget_title_id}&amp;widget_link_id=${widget_link_id}">
                         <span tal:content="string:${crumb/Title}">
                             Breadcrumb Title
                         </span>
