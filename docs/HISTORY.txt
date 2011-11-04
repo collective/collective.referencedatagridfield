@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.4.4-RTPlone3 (2011/11/04)
+---------------------------
+- fixed popup bug [micecchi]
+
 0.4.3-RTPlone3 (2011/11/02)
 ---------------------------
 - fixed IE7 compatibility for inputs [micecchi]
