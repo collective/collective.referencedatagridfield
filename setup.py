@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.4.3-RTPlone3'
+version = '0.4.4-RTPlone3'
 
 setup(name='collective.referencedatagridfield',
       version=version,
