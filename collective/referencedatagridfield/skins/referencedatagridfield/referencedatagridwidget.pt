@@ -75,6 +75,7 @@
             </table>
 
             <a class="referencedatagridwidget-add-button" id="datagridwidget-add-button"
+               i18n:translate="label_add_new"
 			   tal:condition="field/allow_insert"
                    tal:attributes='onclick python: "dataGridFieldFunctions.addReferenceDataGridRow(\"" + field.getName() + "\")"'>Add new</a>
 
