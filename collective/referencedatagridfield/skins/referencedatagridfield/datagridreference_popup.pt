@@ -2,7 +2,7 @@
 
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
-      i18n:domain="atreferencebrowserwidget">
+      i18n:domain="collective.referencedatagridfield">
 
 <head tal:define="ztu modules/ZTUtils;">
     <title tal:content="here/title_or_id">Title or Id</title>
@@ -274,10 +274,13 @@
                                         <img tal:attributes="src string:${item/absolute_url}/$image_method" />
                                       </tal:if>
                                     </td>
-                                    <td width="50%">
-                                        <img src="#" tal:attributes="src string:${site_url}/${item/getIcon};alt item/Title" />
+                                    <td width="50%" class="icons-on">
+                                        <img src="#" tal:condition="item/getIcon"
+                                             tal:attributes="src string:${site_url}/${item/getIcon};
+                                                                     alt item/Title;" />
                                         <a tal:condition="python: item.isPrincipiaFolderish and allow_browse"
-                                           tal:attributes="href python:item.absolute_url() + '/' + template.getId() + '?fieldName='+ fieldName + '&amp;fieldRealName=' + fieldRealName + '&amp;at_url='+at_url + '&amp;sel_button=' + sel_button + '&amp;widget_id=' + widget_id + '&amp;widget_title_id=' + widget_title_id + '&amp;widget_link_id=' + widget_link_id">
+                                           tal:attributes="href python:item.absolute_url() + '/' + template.getId() + '?fieldName='+ fieldName + '&amp;fieldRealName=' + fieldRealName + '&amp;at_url='+at_url + '&amp;sel_button=' + sel_button + '&amp;widget_id=' + widget_id + '&amp;widget_title_id=' + widget_title_id + '&amp;widget_link_id=' + widget_link_id;
+                                           class python:'contenttype-%s' % item.portal_type.lower()">
                                             <strong tal:condition="referenceable"
                                                     tal:content="item/title_or_id">Title</strong>
                                             <span style="" 
@@ -286,12 +289,14 @@
                                         </a>
                                         <tal:foldercheck tal:condition="python: not ((item.isPrincipiaFolderish and allow_browse) and item &lt;&gt; here)" >
                                             <strong tal:condition="referenceable"
+                                                    tal:attributes="class python:'contenttype-%s' % item.portal_type.lower()"
                                                tal:content="item/title_or_id">Title
                                             </strong>
                                             <span style="" 
                                                   tal:condition="python:not referenceable" 
                                                   tal:content="item/title_or_id"
-                                                  tal:attributes="style string:color:${color}" />
+                                                  tal:attributes="style string:color:${color};
+                                                                  class python:'contenttype-%s' % item.portal_type.lower()" />
                                         </tal:foldercheck>
 
                                         <div tal:condition="show_review_state">

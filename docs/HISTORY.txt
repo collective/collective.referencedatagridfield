@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.4.5-RTPlone3 (unreleased)
+---------------------------
+- fixed AT icons in datagridreference_popup.pt for Plone4 compatibility [micecchi]
+
 0.4.4-RTPlone3 (2011/11/04)
 ---------------------------
 - fixed popup bug [micecchi]

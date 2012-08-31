@@ -11,7 +11,8 @@
   <include package="Products.DataGridField" />
 
   <five:registerPackage package="." initialize=".initialize" />
-
+  <i18n:registerTranslations directory="locales" />
+  
   <include package=".browser" />
 
   <cmf:registerDirectory name="skins" directory="skins" recursive="True" />
