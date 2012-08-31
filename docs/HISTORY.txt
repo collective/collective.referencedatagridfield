@@ -3,27 +3,29 @@ Changelog
 
 0.4.5-RTPlone3 (unreleased)
 ---------------------------
-- fixed AT icons in datagridreference_popup.pt for Plone4 compatibility [micecchi]
+- fixed AT icons in datagridreference_popup.pt for Plone4 compatibility [cekk]
+- fixed translations [cekk]
+- added referencebrowser_queryCatalog and referencebrowser_filterBreadcrumb scripts for Plone4 compatibility [cekk]
 
 0.4.4-RTPlone3 (2011/11/04)
 ---------------------------
-- fixed popup bug [micecchi]
+- fixed popup bug [cekk]
 
 0.4.3-RTPlone3 (2011/11/02)
 ---------------------------
-- fixed IE7 compatibility for inputs [micecchi]
+- fixed IE7 compatibility for inputs [cekk]
 
 0.4.2-RTPlone3 (2011/11/02)
 ---------------------------
-- fixed popup template [micecchi]
+- fixed popup template [cekk]
 
 0.4.1-RTPlone3 (2011/10/26)
 ---------------------------
-- fixed compatibility with IE: the overlay doesn't works fine and i replaced it with a popup window like browser widget [micecchi]
+- fixed compatibility with IE: the overlay doesn't works fine and i replaced it with a popup window like browser widget [cekk]
 
 0.4-RTPlone3 (2011/10/03)
 -------------------------
-- fixed compatibility with Plone 3 [micecchi]
+- fixed compatibility with Plone 3 [cekk]
 
 0.4 (July 19, 2011)
 -------------------
