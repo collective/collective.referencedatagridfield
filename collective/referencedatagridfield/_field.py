@@ -114,13 +114,13 @@ class ReferenceDataGridField(DataGridField, ReferenceField):
                 brain = brains[0]
                 data["uid"] = uid
                 # Fix title for uid
-                if data['title'] == getattr(brain, "Title", ""):
+                if data.get("title", "") == getattr(brain, "Title", ""):
                     data['title'] = ""
             result.append(data)
 
         DataGridField.set(self, instance, result, **kwargs)
 
-        uids = [r['uid'] for r in result if r['uid']!=""]
+        uids = [r["uid"] for r in result if r.get("uid")]
         ReferenceField.set(self, instance, uids, **kwargs)
         
     security.declarePrivate('get')
@@ -156,7 +156,7 @@ class ReferenceDataGridField(DataGridField, ReferenceField):
                 data["default_title"] = link
                 # if title not set for remote url - set it equals to url
                 # manually entered link does not have title column field
-                if not data["title"]:
+                if not data.get("title"):
                     data["title"] = data["default_title"]
         # Process UIDs
         if uids:
