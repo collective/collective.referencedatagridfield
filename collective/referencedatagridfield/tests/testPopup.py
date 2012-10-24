@@ -27,6 +27,7 @@ class TestPopupRegistrations(TestCase):
         self.assertNotEqual(custom_named_template, None)
         
     def test_RefDataGridBrowser_popup(self):
+        self.req.form['at_url'] = ""
         popup_page = queryMultiAdapter((object(), self.req), name="refdatagridbrowser_popup")
         self.assertNotEqual(popup_page, None)
 
