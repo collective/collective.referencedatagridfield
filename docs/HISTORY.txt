@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.5.3 (January, 11 2013)
+------------------------
+
+- fixed getting field attributes [kroman0]
+
+
 0.5.2 (April, 20 2012)
 ------------------------
 
