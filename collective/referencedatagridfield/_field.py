@@ -9,7 +9,7 @@ from AccessControl import ClassSecurityInfo
 
 from Products.CMFCore.utils import getToolByName
 from Products.validation import validation #validators import baseValidators
-from Products.Archetypes.Field import encode, ReferenceField
+from Products.Archetypes.Field import decode, encode, ReferenceField
 from Products.Archetypes.Registry import registerField, registerWidget
 
 from archetypes.referencebrowserwidget.widget import ReferenceBrowserWidget
@@ -91,10 +91,10 @@ class ReferenceDataGridField(DataGridField, ReferenceField):
         for row in value:
             data = {}
             for key in [key for key in set(row) if not(key.startswith('_') or key.endswith('_'))]:
-                data[key] = str(row[key]).strip()
+                data[key] = str(encode(row[key], self)).strip()
             uid = str(row.get("uid", "")).strip()
             link = str(row.get("link", "")).strip()
-            title = str(row.get("title", ""))
+            title = str(encode(row.get("title", ""), self))
 
             if not title == "":
                 data["title"] = title
@@ -142,10 +142,12 @@ class ReferenceDataGridField(DataGridField, ReferenceField):
         for row in rows:
             uid = row.get("uid","")
             link = row.get("link","")
-            title = row.get("title","")
+            title = decode(row.get("title",""), self)
             dataGridFieldRowData = row
             dataGridFieldRowData["url"] = ""
             dataGridFieldRowData["default_title"] = None
+            if title:
+                dataGridFieldRowData["title"] = title
             result.append(dataGridFieldRowData) 
             data = result[-1]
             if uid:

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import unittest
 from types import ListType, TupleType, DictionaryType
 from Products.Archetypes.tests.utils import makeContent
@@ -114,6 +115,13 @@ class TestField(TestCase):
         self.field.set(self.demo, data)
         self.assertEqual(self.getData("link"), "http://google.com")
        
+    def testSetUnicodeTitle(self):
+        row = {"uid": self.doc.UID(), "link": "/"}
+        data = [row,]
+        # Let's try to set a unicode with a non-ascii char (em dash)
+        row["title"] = u"Custom — Title"
+        self.field.set(self.demo, data)
+        self.assertEqual(self.getData("title"), u"Custom — Title")
 
 class TestFieldBugs(TestCase):
     """ ReferenceDataGridField unit tests for bugs """
