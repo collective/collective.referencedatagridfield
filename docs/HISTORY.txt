@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.5.4 (unreleased)
+------------------------
+
+- Added support for unicode title [radekj]
+
 0.5.3 (January, 11 2013)
 ------------------------
 
