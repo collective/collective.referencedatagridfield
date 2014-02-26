@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.4.6-RTPlone3 (unreleased)
+0.4.6-RTPlone3 (2014/02/26)
 ---------------------------
 - fix Products.DatagriField >= 1.9.1 (for previously versions, use 0.4.5-RTPlone3 version) [cekk]
 
