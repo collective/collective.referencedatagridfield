@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.4.6-RTPlone3 (unreleased)
+---------------------------
+- fix Products.DatagriField >= 1.9.1 (for previously versions, use 0.4.5-RTPlone3 version) [cekk]
+
 0.4.5-RTPlone3 (unreleased)
 ---------------------------
 - fixed AT icons in datagridreference_popup.pt for Plone4 compatibility [cekk]

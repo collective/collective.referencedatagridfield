@@ -1,9 +1,11 @@
-function referencedatagrid_openBrowser(button, path, fieldName, at_url, fieldRealName, fieldTitleName, fieldLinkName, fieldUID)
+function referencedatagrid_openBrowser(button, path, fieldName, at_url, fieldRealName)
 {
 	var timestamp=new Date().getTime();
 	var button_class="selButton-" + timestamp;
 	jq(button).toggleClass(button_class);
-    atrefpopup = window.open(path + '/datagridreference_popup?sel_button=' + button_class + '&fieldName=' + fieldName + '&fieldRealName=' + fieldRealName +'&at_url=' + at_url + '&widget_title_id=' + fieldTitleName + '&widget_link_id=' + fieldLinkName + '&widget_id=' + fieldUID ,'referencebrowser_popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=550');
+    var parentButton = $(button).parents('.datagridwidget-row');
+    var fields = parentButton.find('.datagridwidget-cell input');
+    atrefpopup = window.open(path + '/datagridreference_popup?sel_button=' + button_class + '&fieldName=' + fieldName + '&fieldRealName=' + fieldRealName +'&at_url=' + at_url + '&widget_title_id=' + fields[0].id + '&widget_link_id=' + fields[1].id + '&widget_id=' + fields[2].id ,'referencebrowser_popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=550');
 }
 
 

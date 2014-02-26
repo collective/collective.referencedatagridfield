@@ -32,17 +32,13 @@
           <div style="clear: both"
               tal:define="
               global at_url at_url|python:'/'.join(here.getPhysicalPath());
-              startup_directory python:helper.getStartupDirectory(field);
-              field_id string:uid_${fieldId};
-              field_link_id string:link_${fieldId};
-              field_title_id string:title_${fieldId};
-              ">
+              startup_directory python:helper.getStartupDirectory(field);">
 			 <input type="button"
                      class="searchButton"
                      value="Search"
                      onClick=""
 					 i18n:attributes="value label_search;"
-                     tal:attributes="onClick string:javascript:referencedatagrid_openBrowser(this,'${startup_directory}','${fieldId}', '${at_url}', '${field/getName}','${field_title_id}','${field_link_id}','${field_id}')" />
+                     tal:attributes="onClick string:javascript:referencedatagrid_openBrowser(this,'${startup_directory}','${fieldId}', '${at_url}', '${field/getName}')" />
            </div>
 
         </td>
