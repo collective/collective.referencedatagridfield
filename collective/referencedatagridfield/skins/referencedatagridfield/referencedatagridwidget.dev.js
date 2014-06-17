@@ -62,7 +62,7 @@ function prepareRefPopup(context) {
                 overlay.close();
             } else {
                 showMessageRDG(title);
-            };
+            }
             jq(this).attr('disabled', 'disabled');
         });
 
@@ -107,7 +107,7 @@ function prepareRefPopup(context) {
             return false;
         });
     });
-};
+}
 
 jq(document).ready(function () {
     prepareRefPopup(this);
@@ -119,12 +119,12 @@ jq.fn.prepRefPopup = function () {
 function disablecurrentrelations(widget_id) {
     jq('ul#' + widget_id + ' :input').each(
 
-    function (intIndex) {
-        uid = jq(this).attr('value');
-        cb = jq('input[rel=' + uid + ']');
-        cb.attr('disabled', 'disabled');
-        cb.attr('checked', 'checked');
-    });
+        function (intIndex) {
+            uid = jq(this).attr('value');
+            cb = jq('input[rel=' + uid + ']');
+            cb.attr('disabled', 'disabled');
+            cb.attr('checked', 'checked');
+        });
 }
 
 // function to return a reference from the popup window back into the widget
@@ -140,7 +140,11 @@ function refdatagridbrowser_setReference(widget_id, uid, label, multi, active_tr
         down_element = null,
         container = null;
 
-    if (typeof(active_tr) != "undefined" && typeof(link_title) != "undefined" && typeof(link_path) != "undefined" && typeof(widget_title_id) != "undefined" && typeof(widget_link_id) != "undefined") {
+    if (typeof(active_tr) !== "undefined" &&
+            typeof(link_title) !== "undefined" &&
+            typeof(link_path) !== "undefined" &&
+            typeof(widget_title_id) !== "undefined" &&
+            typeof(widget_link_id) !== "undefined") {
         // Update Uid field
         jq('#' + widget_id, active_tr).attr("value", uid);
         // Update title field
@@ -395,7 +399,7 @@ dataGridFieldFunctions.addReferenceDataGridRow = function (id) {
     // Find active row and add overlay related processors for active row
     var active_row = jq("#datagridwidget-tbody-" + id + " tr#datagridwidget-row:last");
     jq(active_row).prepRefPopup();
-}
+};
 
 dataGridFieldFunctions.addReferenceDataGridRowAfter = function (currnode) {
     /*
@@ -412,11 +416,11 @@ dataGridFieldFunctions.addReferenceDataGridRowAfter = function (currnode) {
     var active_row = rows[rows.index(curr_row) - 1];
     // add overlay related processors for active row
     jq(active_row).prepRefPopup();
-}
+};
 
 dataGridFieldFunctions.OriginalUpdateOrderIndex = dataGridFieldFunctions.updateOrderIndex;
 dataGridFieldFunctions.updateOrderIndex = function (tbody) {
-    var rows, tr, idx, ov, ov_id, under_idx, new_ov_id
+    var rows, tr, idx, ov, ov_id, under_idx, new_ov_id;
     // update order index with original method
     this.OriginalUpdateOrderIndex(tbody);
     // Update overlay related attributes after rows index updating
@@ -439,22 +443,22 @@ dataGridFieldFunctions.updateOrderIndex = function (tbody) {
         jq("div[id^=atdgrb_]", tr).attr("id", new_ov_id.substring(1));
     }
 
-}
+};
 
 // Event handlers, used in referencebrowser.js
 function triggerTitleClass(e) {
     var element = jq(e.target);
     var current = element.attr("value");
     var initial = element.attr("default_value");
-    if (initial == null || current == null) return;
+    if (initial === null || current === null) return;
 
-    if (initial == current) {
+    if (initial === current) {
         element.attr("class", "not-changed-title-field");
     } else {
-        element.attr("class", "changed-title-field")
+        element.attr("class", "changed-title-field");
     }
 }
 
 function triggerOnFocusStyles(e) {
-    jq(e.target).attr("class", "changed-title-field")
+    jq(e.target).attr("class", "changed-title-field");
 }
