@@ -6,12 +6,12 @@ function prepareRefPopup(context) {
             onBeforeLoad: function () {
                 ov = jq('div#content').data('overlay');
                 // close overlay, if there is one already
-                // we only allow one referenceibrowser per time
+                // we only allow one referencebrowser per time
                 if (ov) {
                     ov.close();
                 }
                 var wrap = this.getOverlay().find('.overlaycontent');
-                var src = this.getTrigger().prop('src');
+                var src = this.getTrigger().attr('src');
                 var srcfilter = src + ' >*';
                 wrap.data('srcfilter', srcfilter);
                 jq('div#content').data('overlay', this);
@@ -19,7 +19,7 @@ function prepareRefPopup(context) {
                 wrap.load(srcfilter);
             },
             onLoad: function () {
-                widget_id = this.getTrigger().prop('rel').substring(6);
+                widget_id = this.getTrigger().attr('rel').substring(6);
                 disablecurrentrelations(widget_id);
             }
         });
@@ -27,7 +27,7 @@ function prepareRefPopup(context) {
         // the breadcrumb-links and the links of the 'tree'-navigation
         jq(document).on('click', '[id^=atdgrb_] a.browsesite', function (event) {
             var target = jq(this);
-            var src = target.prop('href');
+            var src = target.attr('href');
             var wrap = target.parents('.overlaycontent');
             var srcfilter = src + ' >*';
             pushToHistory(wrap.data('srcfilter'));
@@ -37,7 +37,7 @@ function prepareRefPopup(context) {
             // is available, if the history_length-parameter is set on the widget
             // the srcfilter-history is used for storing the URLs to make the
             // 'Back'-link work.
-            var newoption = '<option value="' + src + '">' + target.prop('rel') + '</option>';
+            var newoption = '<option value="' + src + '">' + target.attr('rel') + '</option>';
             refreshOverlay(wrap, srcfilter, newoption);
             return false;
         });
@@ -46,16 +46,16 @@ function prepareRefPopup(context) {
         jq(document).on('click', '[id^=atdgrb_] input.insertreferencedatagrid', function (event) {
             var target = jq(this);
             var wrap = target.parents('.overlaycontent');
-            var fieldname = wrap.find('input[name=fieldName]').prop('value');
-            var fieldtitle = wrap.find('input[name=fieldTitleName]').prop('value');
-            var fieldlink = wrap.find('input[name=fieldLinkName]').prop('value');
-            var multi = wrap.find('input[name=multiValued]').prop('value');
-            var close_window = wrap.find('input[name=close_window]').prop('value');
-            //var title = target.parents('tr').find('img').prop('alt');
+            var fieldname = wrap.find('input[name=fieldName]').attr('value');
+            var fieldtitle = wrap.find('input[name=fieldTitleName]').attr('value');
+            var fieldlink = wrap.find('input[name=fieldLinkName]').attr('value');
+            var multi = wrap.find('input[name=multiValued]').attr('value');
+            var close_window = wrap.find('input[name=close_window]').attr('value');
+            //var title = target.parents('tr').find('img').attr('alt');
             var title = target.parent().next('td').find('strong').html();
-            var linkpath = target.next('input').prop('rel');
+            var linkpath = target.next('input').attr('rel');
             var active_tr = wrap.parents('tr[id=datagridwidget-row]');
-            var uid = target.prop('rel');
+            var uid = target.attr('rel');
             refdatagridbrowser_setReference(fieldname, uid, title, parseInt(multi), active_tr, fieldtitle, title, fieldlink, linkpath);
             if (close_window === '1') {
                 overlay = jq('div#content').data('overlay');
@@ -63,14 +63,14 @@ function prepareRefPopup(context) {
             } else {
                 showMessageRDG(title);
             }
-            jq(this).prop('disabled', true);
+            jq(this).attr('disabled', 'disabled');
         });
 
         // the history menu
         jq(document).on('change', '[id^=atdgrb_] form#history select[name=path]', function (event) {
             var target = jq(this);
             var wrap = target.parents('.overlaycontent');
-            src = jq('[id^=atdgrb_] form#history select[name=path] :selected', this).prop('value');
+            src = jq('[id^=atdgrb_] form#history select[name=path] :selected', this).attr('value');
             var srcfilter = src + ' >*';
             refreshOverlay(wrap, srcfilter, '');
             return false;
@@ -79,7 +79,7 @@ function prepareRefPopup(context) {
         // the pagination links
         jq(document).on('click', '[id^=atdgrb_] div.listingBar a', function (event) {
             var target = jq(this);
-            var src = target.prop('href');
+            var src = target.attr('href');
             var wrap = target.parents('.overlaycontent');
             var srcfilter = src + ' >*';
             refreshOverlay(wrap, srcfilter, '');
@@ -89,16 +89,16 @@ function prepareRefPopup(context) {
         // the search form
         jq(document).on('click', '[id^=atdgrb_] form#search input[name=submit]', function (event) {
             var target = jq(this);
-            var src = target.parents('form').prop('action');
+            var src = target.parents('form').attr('action');
             var wrap = target.parents('.overlaycontent');
-            var fieldname = wrap.find('input[name=fieldName]').prop('value');
-            var fieldtitle = wrap.find('input[name=fieldTitleName]').prop('value');
-            var fieldlink = wrap.find('input[name=fieldLinkName]').prop('value');
-            var fieldrealname = wrap.find('input[name=fieldRealName]').prop('value');
-            var at_url = wrap.find('input[name=at_url]').prop('value');
-            var searchvalue = wrap.find('input[name=searchValue]').prop('value');
-            var multi = wrap.find('input[name=multiValued]').prop('value');
-            var close_window = wrap.find('input[name=close_window]').prop('value');
+            var fieldname = wrap.find('input[name=fieldName]').attr('value');
+            var fieldtitle = wrap.find('input[name=fieldTitleName]').attr('value');
+            var fieldlink = wrap.find('input[name=fieldLinkName]').attr('value');
+            var fieldrealname = wrap.find('input[name=fieldRealName]').attr('value');
+            var at_url = wrap.find('input[name=at_url]').attr('value');
+            var searchvalue = wrap.find('input[name=searchValue]').attr('value');
+            var multi = wrap.find('input[name=multiValued]').attr('value');
+            var close_window = wrap.find('input[name=close_window]').attr('value');
             qs = 'searchValue=' + searchvalue + '&fieldRealName=' + fieldrealname + '&fieldName=' + fieldname + '&multiValued=' + multi + '&close_window=' + close_window + '&at_url=' + at_url + '&fieldTitleName=' + fieldtitle + '&fieldLinkName=' + fieldlink;
             var srcfilter = src + '?' + qs + ' >*';
             pushToHistory(wrap.data('srcfilter'));
@@ -120,10 +120,10 @@ function disablecurrentrelations(widget_id) {
     jq('ul#' + widget_id + ' :input').each(
 
         function (intIndex) {
-            uid = jq(this).prop('value');
+            uid = jq(this).attr('value');
             cb = jq('input[rel=' + uid + ']');
-            cb.prop('disabled', true);
-            cb.prop('checked', true);
+            cb.attr('disabled', 'disabled');
+            cb.attr('checked', 'checked');
         });
 }
 
@@ -146,26 +146,26 @@ function refdatagridbrowser_setReference(widget_id, uid, label, multi, active_tr
             typeof(widget_title_id) !== "undefined" &&
             typeof(widget_link_id) !== "undefined") {
         // Update Uid field
-        jq('#' + widget_id, active_tr).prop("value", uid);
+        jq('#' + widget_id, active_tr).attr("value", uid);
         // Update title field
         title = jq('#' + widget_title_id, active_tr);
-        title.prop("value", link_title);
+        title.attr("value", link_title);
         title.addClass("not-changed-title-field");
-        title.prop("default_value", link_title);
+        title.attr("default_value", link_title);
         title.blur(triggerTitleClass);
         title.focus(triggerOnFocusStyles);
         // Update link field
         link = jq('#' + widget_link_id, active_tr);
-        link.prop('readonly', false);
-        link.prop('value', link_path);
-        link.prop('readonly', true);
+        link.attr('readonly', false);
+        link.attr('value', link_path);
+        link.attr('readonly', true);
         link.addClass("hidden-field");
 
     } else if (multi === 0) {
         // differentiate between the single and mulitselect widget
         // since the single widget has an extra label field.
-        jq('#' + widget_id).prop('value', uid);
-        jq('#' + widget_id + '_label').prop('value', label);
+        jq('#' + widget_id).attr('value', uid);
+        jq('#' + widget_id + '_label').attr('value', label);
     } else {
         // check if the item isn't already in the list
         current_values = jq('#' + widget_id + ' input');
@@ -198,7 +198,7 @@ function refdatagridbrowser_setReference(widget_id, uid, label, multi, active_tr
         li.appendChild(label_element);
         li.id = 'ref-' + widget_id + '-' + current_values.length;
 
-        sortable = jq('input[name=' + widget_id + '-sortable]').prop('value');
+        sortable = jq('input[name=' + widget_id + '-sortable]').attr('value');
         if (sortable === '1') {
             up_element = document.createElement('a');
             up_element.title = 'Move Up';
@@ -248,8 +248,8 @@ function refdatagridbrowser_removeReference(widget_id, multi) {
             list[x].selected = 'selected';
         }
     } else {
-        jq('#' + widget_id).prop('value', "");
-        jq('#' + widget_id + '_label').prop('value', "");
+        jq('#' + widget_id).attr('value', "");
+        jq('#' + widget_id + '_label').attr('value', "");
     }
 }
 
@@ -377,7 +377,7 @@ function refreshOverlay(wrap, srcfilter, newoption) {
     wrap.load(srcfilter, function () {
         jq('[id^=atdgrb_] form#history select').append(newoption + oldhistory.html());
         ov = jq('div#content').data('overlay');
-        widget_id = ov.getTrigger().prop('rel').substring(6);
+        widget_id = ov.getTrigger().attr('rel').substring(6);
         disablecurrentrelations(widget_id);
     });
 }
@@ -431,16 +431,16 @@ dataGridFieldFunctions.updateOrderIndex = function (tbody) {
         tr = rows[i];
         // Update overlay related tags attributes
         order_tag = jq("input[id^=orderindex__]", tr);
-        idx = order_tag.prop("value");
+        idx = order_tag.attr("value");
         // Update rel attribute for overlay box
         ov = jq("input.addreferencedatagrid", tr);
-        ov_id = ov.prop("rel");
+        ov_id = ov.attr("rel");
         under_idx = ov_id.lastIndexOf("_");
         base_id = (under_idx >= 0) ? ov_id.substring(0, under_idx) : "#atrb";
         new_ov_id = base_id + "_" + idx;
-        ov.prop("rel", new_ov_id);
+        ov.attr("rel", new_ov_id);
         // Update target box id - it must be equal to rel attribute
-        jq("div[id^=atdgrb_]", tr).prop("id", new_ov_id.substring(1));
+        jq("div[id^=atdgrb_]", tr).attr("id", new_ov_id.substring(1));
     }
 
 };
@@ -448,17 +448,17 @@ dataGridFieldFunctions.updateOrderIndex = function (tbody) {
 // Event handlers, used in referencebrowser.js
 function triggerTitleClass(e) {
     var element = jq(e.target);
-    var current = element.prop("value");
-    var initial = element.prop("default_value");
+    var current = element.attr("value");
+    var initial = element.attr("default_value");
     if (initial === null || current === null) return;
 
     if (initial === current) {
-        element.prop("class", "not-changed-title-field");
+        element.attr("class", "not-changed-title-field");
     } else {
-        element.prop("class", "changed-title-field");
+        element.attr("class", "changed-title-field");
     }
 }
 
 function triggerOnFocusStyles(e) {
-    jq(e.target).prop("class", "changed-title-field");
+    jq(e.target).attr("class", "changed-title-field");
 }
