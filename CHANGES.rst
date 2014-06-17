@@ -11,6 +11,9 @@ Changelog
 - Use ``linkOpaque.png`` instead of deprecated ``linkOpaque.gif``.
   [thet]
 
+- PEP 8, JSHint.
+  [thet]
+
 - Added support for unicode title.
   [radekj]
 
