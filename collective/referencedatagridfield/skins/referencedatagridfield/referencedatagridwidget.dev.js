@@ -25,7 +25,7 @@ function prepareRefPopup(context) {
         });
 
         // the breadcrumb-links and the links of the 'tree'-navigation
-        jq('[id^=atdgrb_] a.browsesite', context).live('click', function (event) {
+        jq('[id^=atdgrb_] a.browsesite', context).on('click', function (event) {
             var target = jq(this);
             var src = target.attr('href');
             var wrap = target.parents('.overlaycontent');
@@ -43,7 +43,7 @@ function prepareRefPopup(context) {
         });
 
         // the links for inserting referencens
-        jq('[id^=atdgrb_] input.insertreferencedatagrid', context).live('click', function (event) {
+        jq('[id^=atdgrb_] input.insertreferencedatagrid', context).on('click', function (event) {
             var target = jq(this);
             var wrap = target.parents('.overlaycontent');
             var fieldname = wrap.find('input[name=fieldName]').attr('value');
@@ -67,7 +67,7 @@ function prepareRefPopup(context) {
         });
 
         // the history menu
-        jq('[id^=atdgrb_] form#history select[name=path]', context).live('change', function (event) {
+        jq('[id^=atdgrb_] form#history select[name=path]', context).on('change', function (event) {
             var target = jq(this);
             var wrap = target.parents('.overlaycontent');
             src = jq('[id^=atdgrb_] form#history select[name=path] :selected', this).attr('value');
@@ -77,7 +77,7 @@ function prepareRefPopup(context) {
         });
 
         // the pagination links
-        jq('[id^=atdgrb_] div.listingBar a').live('click', function (event) {
+        jq('[id^=atdgrb_] div.listingBar a').on('click', function (event) {
             var target = jq(this);
             var src = target.attr('href');
             var wrap = target.parents('.overlaycontent');
@@ -87,7 +87,7 @@ function prepareRefPopup(context) {
         });
 
         // the search form
-        jq('[id^=atdgrb_] form#search input[name=submit]', context).live('click', function (event) {
+        jq('[id^=atdgrb_] form#search input[name=submit]', context).on('click', function (event) {
             var target = jq(this);
             var src = target.parents('form').attr('action');
             var wrap = target.parents('.overlaycontent');
