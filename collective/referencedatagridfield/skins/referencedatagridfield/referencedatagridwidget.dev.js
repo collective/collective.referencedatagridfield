@@ -19,7 +19,7 @@ function prepareRefPopup(context) {
                 wrap.load(srcfilter);
             },
             onLoad: function () {
-                widget_id = this.getTrigger().prop('rel').substring(6);
+                widget_id = this.getTrigger().attr('rel').substring(6);
                 disablecurrentrelations(widget_id);
             }
         });
@@ -37,7 +37,7 @@ function prepareRefPopup(context) {
             // is available, if the history_length-parameter is set on the widget
             // the srcfilter-history is used for storing the URLs to make the
             // 'Back'-link work.
-            var newoption = '<option value="' + src + '">' + target.prop('rel') + '</option>';
+            var newoption = '<option value="' + src + '">' + target.attr('rel') + '</option>';
             refreshOverlay(wrap, srcfilter, newoption);
             return false;
         });
@@ -53,9 +53,9 @@ function prepareRefPopup(context) {
             var close_window = wrap.find('input[name=close_window]').prop('value');
             //var title = target.parents('tr').find('img').prop('alt');
             var title = target.parent().next('td').find('strong').html();
-            var linkpath = target.next('input').prop('rel');
+            var linkpath = target.next('input').attr('rel');
             var active_tr = wrap.parents('tr[id=datagridwidget-row]');
-            var uid = target.prop('rel');
+            var uid = target.attr('rel');
             refdatagridbrowser_setReference(fieldname, uid, title, parseInt(multi), active_tr, fieldtitle, title, fieldlink, linkpath);
             if (close_window === '1') {
                 overlay = jq('div#content').data('overlay');
@@ -377,7 +377,7 @@ function refreshOverlay(wrap, srcfilter, newoption) {
     wrap.load(srcfilter, function () {
         jq('[id^=atdgrb_] form#history select').append(newoption + oldhistory.html());
         ov = jq('div#content').data('overlay');
-        widget_id = ov.getTrigger().prop('rel').substring(6);
+        widget_id = ov.getTrigger().attr('rel').substring(6);
         disablecurrentrelations(widget_id);
     });
 }
@@ -434,11 +434,11 @@ dataGridFieldFunctions.updateOrderIndex = function (tbody) {
         idx = order_tag.prop("value");
         // Update rel attribute for overlay box
         ov = jq("input.addreferencedatagrid", tr);
-        ov_id = ov.prop("rel");
+        ov_id = ov.attr("rel");
         under_idx = ov_id.lastIndexOf("_");
         base_id = (under_idx >= 0) ? ov_id.substring(0, under_idx) : "#atrb";
         new_ov_id = base_id + "_" + idx;
-        ov.prop("rel", new_ov_id);
+        ov.attr("rel", new_ov_id);
         // Update target box id - it must be equal to rel attribute
         jq("div[id^=atdgrb_]", tr).prop("id", new_ov_id.substring(1));
     }
