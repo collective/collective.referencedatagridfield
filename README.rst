@@ -34,7 +34,7 @@ Headnet company http://headnet.dk/.
 Supported Plone Version
 -----------------------
 
-Plone 4.0 - 4.2
+Plone 4.3
 
 Use Case
 --------
@@ -56,8 +56,8 @@ Links field. Type in full address with  http:// protocol.  In case your URL is
 not correct it will not be saved. Type in desirable title into the Title field.
 If you leave it empty - it will get title the same as URL.
 
-Author
-------
+Authors
+-------
 
 * Andriy Mylenkyy
 * Roman Kozlovskyi
@@ -72,7 +72,6 @@ Thanks
 Links
 -----
 
-* SVN Repository - http://svn.plone.org/svn/collective/collective.referencedatagridfield
+* Github Repository - https://github.com/collective/collective.referencedatagridfield 
+
 * Documentation - http://projects.quintagroup.com/products/wiki/collective.referencedatagridfield
-
-
