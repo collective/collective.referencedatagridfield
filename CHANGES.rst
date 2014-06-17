@@ -4,6 +4,10 @@ Changelog
 0.6 (unreleased)
 ----------------
 
+- Rename ``referencedatagridwidget.js`` to ``referencedatagridwidget.min.js``
+  and ``referencedatagridwidget.dev.js`` to ``referencedatagridwidget.js``.
+  [thet]
+
 - Compatibility for jQuery 1.7 + , including 1.9.Breaks compatibility with
   jQuery < 1.7, thus Plone < 4.3.
   [thet]
