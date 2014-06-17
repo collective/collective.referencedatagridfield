@@ -1,1 +1,1 @@
-import ReferenceDataGridDemoType
+import ReferenceDataGridDemoType  # nopep8

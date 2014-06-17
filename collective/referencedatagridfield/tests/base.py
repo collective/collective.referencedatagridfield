@@ -1,29 +1,25 @@
-import unittest
-
-#from zope.testing import doctestunit
-#from zope.component import testing
-from Products.Five import zcml
-from Products.Five import fiveconfigure
-from Testing import ZopeTestCase as ztc
 from AccessControl import getSecurityManager
-from AccessControl.SecurityManagement import getSecurityManager
 from AccessControl.SecurityManagement import setSecurityManager
-
 from Products.Archetypes.tests.utils import makeContent
-
 from Products.Five import fiveconfigure
+from Products.Five import zcml
 from Products.PloneTestCase import PloneTestCase as ptc
 from Products.PloneTestCase.layer import PloneSite
-
-# install site
-ptc.setupPloneSite(extension_profiles=[
-        'collective.referencedatagridfield:default',
-        'collective.referencedatagridfield:examples'
-        ])
+from Testing import ZopeTestCase as ztc
 
 import collective.referencedatagridfield
 
+
+# install site
+ptc.setupPloneSite(extension_profiles=[
+    'collective.referencedatagridfield:default',
+    'collective.referencedatagridfield:examples'
+])
+
+
+
 class MixIn(object):
+
     """ Mixin for setting up the necessary bits for testing the
         collective.referencedatagridfield
     """
@@ -47,10 +43,10 @@ class MixIn(object):
         sm = getSecurityManager()
         self.loginAsPortalOwner()
         content = {
-            "demo": {"type":'ReferenceDataGridDemoType', "title": 'RDGF Demo'},
-            "doc": {"type":'Document', "title": 'Test Document'},
-            "doc2": {"type":'Document', "title": 'Test Document 2'},
-            }
+            "demo": {
+                "type": 'ReferenceDataGridDemoType', "title": 'RDGF Demo'}, "doc": {
+                "type": 'Document', "title": 'Test Document'}, "doc2": {
+                "type": 'Document', "title": 'Test Document 2'}, }
         try:
             wf = self.portal.portal_workflow
             for cid, data in content.items():
@@ -64,9 +60,12 @@ class MixIn(object):
         finally:
             setSecurityManager(sm)
 
+
 class TestCase(MixIn, ptc.PloneTestCase):
+
     """ Base TestCase for collective.referencedatagridfield """
+
 
 class FunctionalTestCase(MixIn, ptc.FunctionalTestCase):
-    """ Base TestCase for collective.referencedatagridfield """
 
+    """ Base TestCase for collective.referencedatagridfield """

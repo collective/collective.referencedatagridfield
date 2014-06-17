@@ -1,21 +1,19 @@
+from Products.Five import BrowserView
+from Products.PloneTestCase.PloneTestCase import default_password
+from Products.PloneTestCase.PloneTestCase import portal_owner
+from collective.referencedatagridfield import ReferenceDataGridWidget
+from collective.referencedatagridfield.tests.base import FunctionalTestCase
+from collective.referencedatagridfield.tests.base import TestCase
+from zope.component import queryAdapter, queryMultiAdapter
+from zope.formlib.namedtemplate import INamedTemplate
+from zope.publisher.browser import TestRequest
+
 import re
 import unittest
 
-from zope.publisher.browser import TestRequest
-from zope.formlib.namedtemplate import INamedTemplate
-from zope.component import queryAdapter, queryMultiAdapter
-
-from Products.Five import BrowserView
-
-from Products.PloneTestCase.PloneTestCase import portal_owner
-from Products.PloneTestCase.PloneTestCase import default_password
-
-from collective.referencedatagridfield import ReferenceDataGridWidget
-from collective.referencedatagridfield.tests.base import TestCase
-from collective.referencedatagridfield.tests.base import FunctionalTestCase
-
 
 class TestPopupRegistrations(TestCase):
+
     """Test popup related adapters registration."""
 
     def afterSetUp(self):
@@ -23,12 +21,16 @@ class TestPopupRegistrations(TestCase):
 
     def test_CustomNamedTemplate(self):
         view = BrowserView(self.portal, self.req)
-        custom_named_template = queryAdapter(view, INamedTemplate, name="datagridref_popup")
+        custom_named_template = queryAdapter(
+            view,
+            INamedTemplate,
+            name="datagridref_popup")
         self.assertNotEqual(custom_named_template, None)
-        
+
     def test_RefDataGridBrowser_popup(self):
         self.req.form['at_url'] = ""
-        popup_page = queryMultiAdapter((object(), self.req), name="refdatagridbrowser_popup")
+        popup_page = queryMultiAdapter(
+            (object(), self.req), name="refdatagridbrowser_popup")
         self.assertNotEqual(popup_page, None)
 
     def test_WidgetBindToNamedTemplate(self):
@@ -37,6 +39,7 @@ class TestPopupRegistrations(TestCase):
 
 
 class TestPopupRelatedStaff(FunctionalTestCase):
+
     """Test pupup related staff in edit mode of ReferenceDataGridWidget."""
 
     def testAddReferenceButton(self):
@@ -45,10 +48,10 @@ class TestPopupRelatedStaff(FunctionalTestCase):
         self.createDemo()
         self.demo.edit(demo_rdgf=[{"link": "http://google.com"}])
         html = self.publish("/%s/edit" % self.demo.absolute_url(1),
-                            portal_owner+':'+default_password).getBody()
+                            portal_owner + ':' + default_password).getBody()
         # Get Add... button
         rebutt = re.compile("<input\s+[^>]*type=\"button\"\s*[^>]*>", re.S)
-        add_button = filter(lambda k:not "_new" in k, rebutt.findall(html))[0]
+        add_button = filter(lambda k: "_new" not in k, rebutt.findall(html))[0]
         src = re.search("src=\"([^\"]*)\"", add_button).groups()[0]
         # src url must points to refdatagridbrowser_popup view
         url = self.demo.absolute_url() + '/refdatagridbrowser_popup?'
@@ -59,4 +62,4 @@ def test_suite():
     return unittest.TestSuite([
         unittest.makeSuite(TestPopupRegistrations),
         unittest.makeSuite(TestPopupRelatedStaff),
-        ])
+    ])

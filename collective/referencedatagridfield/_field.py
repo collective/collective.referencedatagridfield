@@ -1,37 +1,25 @@
-#from Products.Archetypes import atapi
-import re
-import logging
-import urlparse
-from urllib import quote
-from types import ListType, TupleType
-
 from AccessControl import ClassSecurityInfo
-
-from Products.CMFCore.utils import getToolByName
-from Products.validation import validation #validators import baseValidators
 from Products.Archetypes.Field import decode, encode, ReferenceField
 from Products.Archetypes.Registry import registerField, registerWidget
-
-from archetypes.referencebrowserwidget.widget import ReferenceBrowserWidget
-
-from Products.DataGridField.Column import Column
+from Products.CMFCore.utils import getToolByName
 from Products.DataGridField.DataGridField import DataGridField
 from Products.DataGridField.DataGridWidget import DataGridWidget
-
+from Products.validation import validation  # validators import baseValidators
+from archetypes.referencebrowserwidget.widget import ReferenceBrowserWidget
 from collective.referencedatagridfield.columns import BlockColumn
 from collective.referencedatagridfield.columns import HiddenColumn
 from collective.referencedatagridfield.columns import StyledColumn
+from types import ListType, TupleType
+from urllib import quote
+import urlparse
 
-# Logger object
-#logger = logging.getLogger('ReferenceDataGridField')
-#logger.debug("ReferenceDataGrid loading")
 
 class ReferenceDataGridWidget(DataGridWidget, ReferenceBrowserWidget):
     _properties = ReferenceBrowserWidget._properties.copy()
     _properties.update(DataGridWidget._properties.copy())
     _properties.update({
         'macro': "referencedatagridwidget",
-        'helper_css': ('datagridwidget.css','referencedatagridwidget.css'),
+        'helper_css': ('datagridwidget.css', 'referencedatagridwidget.css'),
         'helper_js': ('datagridwidget.js', 'referencedatagridwidget.js'),
         'force_close_on_insert': True,
         'popup_name': 'datagridref_popup',
@@ -43,11 +31,12 @@ class ReferenceDataGridWidget(DataGridWidget, ReferenceBrowserWidget):
                                   class_changed="changed-title-field",
                                   class_not_changed="not-changed-title-field"),
             'link': BlockColumn("Link", column_on_class="hidden-field",
-                                columns=['link','uid'], read_only=True),
+                                columns=['link', 'uid'], read_only=True),
             'uid': HiddenColumn("UID", visible=False)},
-        })
+    })
 
 isURL = validation.validatorFor('isURL')
+
 
 class ReferenceDataGridField(DataGridField, ReferenceField):
     _properties = ReferenceField._properties.copy()
@@ -55,29 +44,33 @@ class ReferenceDataGridField(DataGridField, ReferenceField):
     _properties.update({
         'columns': ('title', 'link', 'uid'),
         'widget': ReferenceDataGridWidget,
-        'multiValued' : True,
-        })
+        'multiValued': True,
+    })
 
     security = ClassSecurityInfo()
 
     security.declarePrivate('isRemoteURL')
+
     def isRemoteURL(self, url):
         return isURL(url) == 1 and True or False
 
     security.declarePrivate('set')
+
     def set(self, instance, value, **kwargs):
-        """
-        The passed in object should be a records object, or a sequence of dictionaries
+        """The passed in object should be a records object, or a sequence of
+        dictionaries
+
         About link data:
           * interpretations:
-            * if data not starts with standard protocol names (http://, ftp://) than
-              *uid* field data will be used as reference
+            * if data not starts with standard protocol names (http://, ftp://)
+              than *uid* field data will be used as reference
           * record removed if:
             * no data;
             * data contains UID of not existent object
+
         About title:
-          * if there is UID of existent object and record has same title to the original
-            object - title will not be saved.
+          * if there is UID of existent object and record has same title to the
+            original object - title will not be saved.
         """
         catalog = getToolByName(instance, "uid_catalog")
 
@@ -90,7 +83,8 @@ class ReferenceDataGridField(DataGridField, ReferenceField):
         result = []
         for row in value:
             data = {}
-            for key in [key for key in set(row) if not(key.startswith('_') or key.endswith('_'))]:
+            for key in [key for key in set(row)
+                        if not(key.startswith('_') or key.endswith('_'))]:
                 data[key] = str(encode(row[key], self)).strip()
             uid = str(row.get("uid", "")).strip()
             link = str(row.get("link", "")).strip()
@@ -122,16 +116,16 @@ class ReferenceDataGridField(DataGridField, ReferenceField):
 
         uids = [r["uid"] for r in result if r.get("uid")]
         ReferenceField.set(self, instance, uids, **kwargs)
-        
+
     security.declarePrivate('get')
+
     def get(self, instance, **kwargs):
-        """ Return DataGridField value
+        """Return DataGridField value
 
         Value is a list object of rows.
         Row id dictionary object with standard 'link', 'uid' and 'title' keys
         plus extra informal *url* and *url_title* keys
         """
-        purl = getToolByName(instance, "portal_url")
         # use portal_catalog to hide protected object for the logged in user.
         catalog = getToolByName(instance, "portal_catalog")
 
@@ -140,15 +134,15 @@ class ReferenceDataGridField(DataGridField, ReferenceField):
         rows = DataGridField.get(self, instance, **kwargs)
 
         for row in rows:
-            uid = row.get("uid","")
-            link = row.get("link","")
-            title = decode(row.get("title",""), self)
+            uid = row.get("uid", "")
+            link = row.get("link", "")
+            title = decode(row.get("title", ""), self)
             dataGridFieldRowData = row
             dataGridFieldRowData["url"] = ""
             dataGridFieldRowData["default_title"] = None
             if title:
                 dataGridFieldRowData["title"] = title
-            result.append(dataGridFieldRowData) 
+            result.append(dataGridFieldRowData)
             data = result[-1]
             if uid:
                 uids[uid] = data
@@ -181,10 +175,10 @@ registerWidget(
     ReferenceDataGridWidget,
     title='DataGrid Reference',
     used_for=('collective.referencedatagridfield.ReferenceDataGridField',)
-    )
+)
 
 registerField(
     ReferenceDataGridField,
     title="DataGrid Reference Field",
     description=("Reference DataGrid field.")
-    )
+)
