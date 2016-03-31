@@ -157,8 +157,10 @@ class ReferenceDataGridField(DataGridField, ReferenceField):
         # Process UIDs
         if uids:
             brains = catalog(UID=uids.keys())
-            for b in brains:
-                data = uids[b.UID]
+            brain_map = dict((b.UID, b) for b in brains)
+            for data in result:
+                uid = row.get('uid')
+                b = brain_map.get(uid)
                 data["url"] = b.getURL()
                 data["link"] = b.getPath()
                 data["default_title"] = self._brains_title_or_id(b, instance)

@@ -269,6 +269,7 @@ if (dataGridFieldFunctions === undefined) {
     function prepareRefPopup(context) {
         jq(function () {
             // the overlay itself
+            var active_tr;
             jq('.addreferencedatagrid', context).overlay({
                 closeOnClick: false,
                 onBeforeLoad: function () {
@@ -280,6 +281,7 @@ if (dataGridFieldFunctions === undefined) {
                         ov.close();
                     }
                     wrap = this.getOverlay().find('.overlaycontent');
+                    active_tr = this.getTrigger().parents('tr.datagridwidget-row');
                     src = this.getTrigger().prop('src');
                     srcfilter = src + ' >*';
                     wrap.data('srcfilter', srcfilter);
@@ -314,7 +316,7 @@ if (dataGridFieldFunctions === undefined) {
 
             // the links for inserting referencens
             jq(document).on('click', '[id^=atdgrb_] input.insertreferencedatagrid', function () {
-                var target, wrap, fieldname, fieldtitle, fieldlink, multi, close_window, title, linkpath, active_tr, uid, overlay;
+                var target, wrap, fieldname, fieldtitle, fieldlink, multi, close_window, title, linkpath, uid, overlay;
                 target = jq(this);
                 wrap = target.parents('.overlaycontent');
                 fieldname = wrap.find('input[name=fieldName]').prop('value');
@@ -325,7 +327,6 @@ if (dataGridFieldFunctions === undefined) {
                 //var title = target.parents('tr').find('img').prop('alt');
                 title = target.parent().next('td').find('strong').html();
                 linkpath = target.next('input').attr('rel');
-                active_tr = wrap.parents('tr[id=datagridwidget-row]');
                 uid = target.attr('rel');
 
                 refdatagridbrowser_setReference(fieldname, uid, title, parseInt(multi, 10), active_tr, fieldtitle, title, fieldlink, linkpath);
@@ -443,7 +444,7 @@ if (dataGridFieldFunctions === undefined) {
         this.addRow(id);
 
         // Find active row and add overlay related processors for active row
-        var active_row = jq("#datagridwidget-tbody-" + id + " tr#datagridwidget-row:last");
+        var active_row = jq("#datagridwidget-tbody-" + id + " tr.datagridwidget-row:last");
         jq(active_row).prepRefPopup();
     };
 
@@ -458,8 +459,8 @@ if (dataGridFieldFunctions === undefined) {
         // find active row
         var tbody, rows, curr_row, active_row;
         tbody = jq(currnode).parents("[id^=datagridwidget-tbody-]");
-        rows = jq("#datagridwidget-row", tbody);
-        curr_row = jq(currnode).parents("tr#datagridwidget-row");
+        rows = jq("tr.datagridwidget-row", tbody);
+        curr_row = jq(currnode).parents("tr.datagridwidget-row");
         active_row = rows[rows.index(curr_row) - 1];
         // add overlay related processors for active row
         jq(active_row).prepRefPopup();
@@ -472,7 +473,7 @@ if (dataGridFieldFunctions === undefined) {
         this.OriginalUpdateOrderIndex(tbody);
         // Update overlay related attributes after rows index updating
         // for all datagridwidget rows
-        rows = jq("#datagridwidget-row", tbody);
+        rows = jq("tr.datagridwidget-row", tbody);
         for (i = 0; i < rows.length; i = i + 1) {
             // get working row
             tr = rows[i];

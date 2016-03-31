@@ -4,6 +4,12 @@ Changelog
 0.6 (unreleased)
 ----------------
 
+- Fix issues populating correct link field when multiple rows are added.
+  [alecpm]
+
+- Fix title display when multiple rows reference the same UID.
+  [alecpm]
+
 - Rename ``referencedatagridwidget.js`` to ``referencedatagridwidget.min.js``
   and ``referencedatagridwidget.dev.js`` to ``referencedatagridwidget.js``.
   [thet]
