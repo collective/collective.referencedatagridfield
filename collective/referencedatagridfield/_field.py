@@ -159,7 +159,7 @@ class ReferenceDataGridField(DataGridField, ReferenceField):
             brains = catalog(UID=uids.keys())
             brain_map = dict((b.UID, b) for b in brains)
             for data in result:
-                uid = row.get('uid')
+                uid = data.get('uid')
                 b = brain_map.get(uid)
                 data["url"] = b.getURL()
                 data["link"] = b.getPath()
