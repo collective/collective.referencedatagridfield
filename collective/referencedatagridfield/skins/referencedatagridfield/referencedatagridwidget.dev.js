@@ -1,10 +1,10 @@
 function prepareRefPopup(context) {
-    jq(function () {
+    $(function () {
         // the overlay itself
-        jq('.addreferencedatagrid', context).overlay({
+        $('.addreferencedatagrid', context).overlay({
             closeOnClick: false,
             onBeforeLoad: function () {
-                ov = jq('div#content').data('overlay');
+                ov = $('div#content').data('overlay');
                 // close overlay, if there is one already
                 // we only allow one referencebrowser per time
                 if (ov) {
@@ -14,7 +14,7 @@ function prepareRefPopup(context) {
                 var src = this.getTrigger().attr('src');
                 var srcfilter = src + ' >*';
                 wrap.data('srcfilter', srcfilter);
-                jq('div#content').data('overlay', this);
+                $('div#content').data('overlay', this);
                 resetHistory();
                 wrap.load(srcfilter);
             },
@@ -25,8 +25,8 @@ function prepareRefPopup(context) {
         });
 
         // the breadcrumb-links and the links of the 'tree'-navigation
-        jq('[id^=atrb_] a.browsesite', context).live('click', function (event) {
-            var target = jq(this);
+        $('[id^=atrb_] a.browsesite', context).live('click', function (event) {
+            var target = $(this);
             var src = target.attr('href');
             var wrap = target.parents('.overlaycontent');
             var srcfilter = src + ' >*';
@@ -43,8 +43,8 @@ function prepareRefPopup(context) {
         });
 
         // the links for inserting referencens
-        jq('[id^=atrb_] input.insertreferencedatagrid', context).live('click', function (event) {
-            var target = jq(this);
+        $('[id^=atrb_] input.insertreferencedatagrid', context).live('click', function (event) {
+            var target = $(this);
             var wrap = target.parents('.overlaycontent');
             var fieldname = wrap.find('input[name=fieldName]').attr('value');
             var fieldtitle = wrap.find('input[name=fieldTitleName]').attr('value');
@@ -58,27 +58,27 @@ function prepareRefPopup(context) {
             var uid = target.attr('rel');
             refdatagridbrowser_setReference(fieldname, uid, title, parseInt(multi), active_tr, fieldtitle, title, fieldlink, linkpath);
             if (close_window === '1') {
-                overlay = jq('div#content').data('overlay');
+                overlay = $('div#content').data('overlay');
                 overlay.close();
             } else {
                 showMessageRDG(title);
             };
-            jq(this).attr('disabled', 'disabled');
+            $(this).attr('disabled', 'disabled');
         });
 
         // the history menu
-        jq('[id^=atrb_] form#history select[name=path]', context).live('change', function (event) {
-            var target = jq(this);
+        $('[id^=atrb_] form#history select[name=path]', context).live('change', function (event) {
+            var target = $(this);
             var wrap = target.parents('.overlaycontent');
-            src = jq('[id^=atrb_] form#history select[name=path] :selected', this).attr('value');
+            src = $('[id^=atrb_] form#history select[name=path] :selected', this).attr('value');
             var srcfilter = src + ' >*';
             refreshOverlay(wrap, srcfilter, '');
             return false;
         });
 
         // the pagination links
-        jq('[id^=atrb_] div.listingBar a').live('click', function (event) {
-            var target = jq(this);
+        $('[id^=atrb_] div.listingBar a').live('click', function (event) {
+            var target = $(this);
             var src = target.attr('href');
             var wrap = target.parents('.overlaycontent');
             var srcfilter = src + ' >*';
@@ -87,8 +87,8 @@ function prepareRefPopup(context) {
         });
 
         // the search form
-        jq('[id^=atrb_] form#search input[name=submit]', context).live('click', function (event) {
-            var target = jq(this);
+        $('[id^=atrb_] form#search input[name=submit]', context).live('click', function (event) {
+            var target = $(this);
             var src = target.parents('form').attr('action');
             var wrap = target.parents('.overlaycontent');
             var fieldname = wrap.find('input[name=fieldName]').attr('value');
@@ -109,7 +109,7 @@ function prepareRefPopup(context) {
     });
 };
 
-jq(document).ready(function () {
+$(document).ready(function () {
     prepareRefPopup(this);
 });
 jq.fn.prepRefPopup = function () {
@@ -117,11 +117,11 @@ jq.fn.prepRefPopup = function () {
 };
 
 function disablecurrentrelations(widget_id) {
-    jq('ul#' + widget_id + ' :input').each(
+    $('ul#' + widget_id + ' :input').each(
 
     function (intIndex) {
-        uid = jq(this).attr('value');
-        cb = jq('input[rel=' + uid + ']');
+        uid = $(this).attr('value');
+        cb = $('input[rel=' + uid + ']');
         cb.attr('disabled', 'disabled');
         cb.attr('checked', 'checked');
     });
@@ -142,16 +142,16 @@ function refdatagridbrowser_setReference(widget_id, uid, label, multi, active_tr
 
     if (typeof(active_tr) != "undefined" && typeof(link_title) != "undefined" && typeof(link_path) != "undefined" && typeof(widget_title_id) != "undefined" && typeof(widget_link_id) != "undefined") {
         // Update Uid field
-        jq('#' + widget_id, active_tr).attr("value", uid);
+        $('#' + widget_id, active_tr).attr("value", uid);
         // Update title field
-        title = jq('#' + widget_title_id, active_tr);
+        title = $('#' + widget_title_id, active_tr);
         title.attr("value", link_title);
         title.addClass("not-changed-title-field");
         title.attr("default_value", link_title);
         title.blur(triggerTitleClass);
         title.focus(triggerOnFocusStyles);
         // Update link field
-        link = jq('#' + widget_link_id, active_tr);
+        link = $('#' + widget_link_id, active_tr);
         link.attr('readonly', false);
         link.attr('value', link_path);
         link.attr('readonly', true);
@@ -160,11 +160,11 @@ function refdatagridbrowser_setReference(widget_id, uid, label, multi, active_tr
     } else if (multi === 0) {
         // differentiate between the single and mulitselect widget
         // since the single widget has an extra label field.
-        jq('#' + widget_id).attr('value', uid);
-        jq('#' + widget_id + '_label').attr('value', label);
+        $('#' + widget_id).attr('value', uid);
+        $('#' + widget_id + '_label').attr('value', label);
     } else {
         // check if the item isn't already in the list
-        current_values = jq('#' + widget_id + ' input');
+        current_values = $('#' + widget_id + ' input');
         for (i = 0; i < current_values.length; i++) {
             if (current_values[i].value === uid) {
                 return false;
@@ -174,10 +174,10 @@ function refdatagridbrowser_setReference(widget_id, uid, label, multi, active_tr
         list = document.getElementById(widget_id);
         // add ul-element to DOM, if it is not there
         if (list === null) {
-            container = jq('#archetypes-fieldname-' + widget_id + ' input + div');
+            container = $('#archetypes-fieldname-' + widget_id + ' input + div');
             if (!container.length) {
                 // fix for Plone 3.3 collections, with a weird widget-id
-                container = jq('#archetypes-fieldname-value input + div');
+                container = $('#archetypes-fieldname-value input + div');
             }
             container.after('<ul class="visualNoMarker" id="' + widget_id + '"></ul>');
             list = document.getElementById(widget_id);
@@ -194,7 +194,7 @@ function refdatagridbrowser_setReference(widget_id, uid, label, multi, active_tr
         li.appendChild(label_element);
         li.id = 'ref-' + widget_id + '-' + current_values.length;
 
-        sortable = jq('input[name=' + widget_id + '-sortable]').attr('value');
+        sortable = $('input[name=' + widget_id + '-sortable]').attr('value');
         if (sortable === '1') {
             up_element = document.createElement('a');
             up_element.title = 'Move Up';
@@ -244,8 +244,8 @@ function refdatagridbrowser_removeReference(widget_id, multi) {
             list[x].selected = 'selected';
         }
     } else {
-        jq('#' + widget_id).attr('value', "");
-        jq('#' + widget_id + '_label').attr('value', "");
+        $('#' + widget_id).attr('value', "");
+        $('#' + widget_id + '_label').attr('value', "");
     }
 }
 
@@ -309,7 +309,7 @@ function refdatagridbrowser_moveReferenceDown(self) {
     eid = elem.id.split('-');
     pos = parseInt(eid.pop(), 10);
     widget_id = eid.pop();
-    current_values = jq('#' + widget_id + ' input');
+    current_values = $('#' + widget_id + ' input');
     if ((pos + 1) === current_values.length) {
         return false;
     }
@@ -340,8 +340,8 @@ function refdatagridbrowser_moveReferenceDown(self) {
 }
 
 function showMessageRDG(message) {
-    jq('#messageTitle').text(message);
-    jq('#message').show();
+    $('#messageTitle').text(message);
+    $('#message').show();
 }
 
 function submitHistoryForm() {
@@ -352,27 +352,27 @@ function submitHistoryForm() {
 }
 
 function pushToHistory(url) {
-    var history = jq(document).data('atrb_history');
+    var history = $(document).data('atrb_history');
     history.push(url);
-    jq(document).data('atrb_history', history);
+    $(document).data('atrb_history', history);
 }
 
 function resetHistory() {
-    jq(document).data('atrb_history', []);
+    $(document).data('atrb_history', []);
 }
 
 function popFromHistory() {
-    var history = jq(document).data('atrb_history');
+    var history = $(document).data('atrb_history');
     value = history.pop();
-    jq(document).data('atrb_history', history);
+    $(document).data('atrb_history', history);
     return value;
 }
 
 function refreshOverlay(wrap, srcfilter, newoption) {
-    var oldhistory = jq('[id^=atrb_] form#history select');
+    var oldhistory = $('[id^=atrb_] form#history select');
     wrap.load(srcfilter, function () {
-        jq('[id^=atrb_] form#history select').append(newoption + oldhistory.html());
-        ov = jq('div#content').data('overlay');
+        $('[id^=atrb_] form#history select').append(newoption + oldhistory.html());
+        ov = $('div#content').data('overlay');
         widget_id = ov.getTrigger().attr('rel').substring(6);
         disablecurrentrelations(widget_id);
     });
@@ -393,8 +393,8 @@ dataGridFieldFunctions.addReferenceDataGridRow = function (id) {
     this.addRow(id);
 
     // Find active row and add overlay related processors for active row
-    var active_row = jq("#datagridwidget-tbody-" + id + " tr#datagridwidget-row:last");
-    jq(active_row).prepRefPopup();
+    var active_row = $("#datagridwidget-tbody-" + id + " tr#datagridwidget-row:last");
+    $(active_row).prepRefPopup();
 }
 
 dataGridFieldFunctions.addReferenceDataGridRowAfter = function (currnode) {
@@ -406,12 +406,12 @@ dataGridFieldFunctions.addReferenceDataGridRowAfter = function (currnode) {
     // add row with datagrid original method
     this.addRowAfter(currnode);
     // find active row
-    var tbody = jq(currnode).parents("[id^=datagridwidget-tbody-]");
-    var rows = jq("#datagridwidget-row", tbody);
-    var curr_row = jq(currnode).parents("tr#datagridwidget-row");
+    var tbody = $(currnode).parents("[id^=datagridwidget-tbody-]");
+    var rows = $("#datagridwidget-row", tbody);
+    var curr_row = $(currnode).parents("tr#datagridwidget-row");
     var active_row = rows[rows.index(curr_row) - 1];
     // add overlay related processors for active row
-    jq(active_row).prepRefPopup();
+    $(active_row).prepRefPopup();
 }
 
 dataGridFieldFunctions.OriginalUpdateOrderIndex = dataGridFieldFunctions.updateOrderIndex;
@@ -421,29 +421,29 @@ dataGridFieldFunctions.updateOrderIndex = function (tbody) {
     this.OriginalUpdateOrderIndex(tbody);
     // Update overlay related attributes after rows index updating
     // for all datagridwidget rows
-    rows = jq("#datagridwidget-row", tbody);
+    rows = $("#datagridwidget-row", tbody);
     for (var i = 0; i < rows.length; ++i) {
         // get working row
         tr = rows[i];
         // Update overlay related tags attributes
-        order_tag = jq("input[id^=orderindex__]", tr);
+        order_tag = $("input[id^=orderindex__]", tr);
         idx = order_tag.attr("value");
         // Update rel attribute for overlay box
-        ov = jq("input.addreferencedatagrid", tr);
+        ov = $("input.addreferencedatagrid", tr);
         ov_id = ov.attr("rel");
         under_idx = ov_id.lastIndexOf("_");
         base_id = (under_idx >= 0) ? ov_id.substring(0, under_idx) : "#atrb";
         new_ov_id = base_id + "_" + idx;
         ov.attr("rel", new_ov_id);
         // Update target box id - it must be equal to rel attribute
-        jq("div[id^=atrb_]", tr).attr("id", new_ov_id.substring(1));
+        $("div[id^=atrb_]", tr).attr("id", new_ov_id.substring(1));
     }
 
 }
 
 // Event handlers, used in referencebrowser.js
 function triggerTitleClass(e) {
-    var element = jq(e.target);
+    var element = $(e.target);
     var current = element.attr("value");
     var initial = element.attr("default_value");
     if (initial == null || current == null) return;
@@ -456,5 +456,5 @@ function triggerTitleClass(e) {
 }
 
 function triggerOnFocusStyles(e) {
-    jq(e.target).attr("class", "changed-title-field")
+    $(e.target).attr("class", "changed-title-field")
 }

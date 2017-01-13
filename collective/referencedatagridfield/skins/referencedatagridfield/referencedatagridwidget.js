@@ -2,7 +2,7 @@ function referencedatagrid_openBrowser(button, path, fieldName, at_url, fieldRea
 {
 	var timestamp=new Date().getTime();
 	var button_class="selButton-" + timestamp;
-	jq(button).toggleClass(button_class);
+	$(button).toggleClass(button_class);
     var parentButton = $(button).parents('.datagridwidget-row');
     var fields = parentButton.find('.datagridwidget-cell input');
     atrefpopup = window.open(path + '/datagridreference_popup?sel_button=' + button_class + '&fieldName=' + fieldName + '&fieldRealName=' + fieldRealName +'&at_url=' + at_url + '&widget_title_id=' + fields[0].id + '&widget_link_id=' + fields[1].id + '&widget_id=' + fields[2].id ,'referencebrowser_popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=550');
@@ -10,9 +10,9 @@ function referencedatagrid_openBrowser(button, path, fieldName, at_url, fieldRea
 
 
 function disablecurrentrelations(widget_id) {
-    jq('ul#' + widget_id + ' :input').each(function (intIndex) {
-        uid = jq(this).attr('value');
-        cb = jq('input[rel=' + uid + ']');
+    $('ul#' + widget_id + ' :input').each(function (intIndex) {
+        uid = $(this).attr('value');
+        cb = $('input[rel=' + uid + ']');
         cb.attr('disabled', 'disabled');
         cb.attr('checked', 'checked');
     });
@@ -20,28 +20,28 @@ function disablecurrentrelations(widget_id) {
 
 function refdatagridbrowser_setReference(widget_id, uid, label, multi, active_button, widget_title_id, link_title, widget_link_id, link_path) {
 	var element = null, label_element = null, current_values = null, i = null, list = null, li = null, input = null, up_element = null, down_element = null, container = null;
-    var active_tr = jq('input.'+active_button).parents('tr[id=datagridwidget-row]');
+    var active_tr = $('input.'+active_button).parents('tr[id=datagridwidget-row]');
 	if (typeof(active_tr) != "undefined" && typeof(link_title) != "undefined" && typeof(link_path) != "undefined" && typeof(widget_title_id) != "undefined" && typeof(widget_link_id) != "undefined") {
-        jq('#' + widget_id, active_tr).attr("value", uid);
-        title = jq('#' + widget_title_id, active_tr);
+        $('#' + widget_id, active_tr).attr("value", uid);
+        title = $('#' + widget_title_id, active_tr);
         title.attr("value", link_title);
         title.addClass("not-changed-title-field");
         title.attr("default_value", link_title);
         title.blur(triggerTitleClass);
         title.focus(triggerOnFocusStyles);
-        link = jq('#' + widget_link_id, active_tr);
+        link = $('#' + widget_link_id, active_tr);
         link.attr('readonly', false);
         link.attr('value', link_path);
         link.attr('readonly', true);
         link.addClass("hidden-field");
     }
-    else 
+    else
         if (multi === 0) {
-            jq('#' + widget_id).attr('value', uid);
-            jq('#' + widget_id + '_label').attr('value', label);
+            $('#' + widget_id).attr('value', uid);
+            $('#' + widget_id + '_label').attr('value', label);
         }
         else {
-            current_values = jq('#' + widget_id + ' input');
+            current_values = $('#' + widget_id + ' input');
             for (i = 0; i < current_values.length; i++) {
                 if (current_values[i].value === uid) {
                     return false;
@@ -49,9 +49,9 @@ function refdatagridbrowser_setReference(widget_id, uid, label, multi, active_bu
             }
             list = document.getElementById(widget_id);
             if (list === null) {
-                container = jq('#archetypes-fieldname-' + widget_id + ' input + div');
+                container = $('#archetypes-fieldname-' + widget_id + ' input + div');
                 if (!container.length) {
-                    container = jq('#archetypes-fieldname-value input + div');
+                    container = $('#archetypes-fieldname-value input + div');
                 }
                 container.after('<ul class="visualNoMarker" id="' + widget_id + '"></ul>');
                 list = document.getElementById(widget_id);
@@ -67,7 +67,7 @@ function refdatagridbrowser_setReference(widget_id, uid, label, multi, active_bu
             label_element.appendChild(document.createTextNode(' ' + label));
             li.appendChild(label_element);
             li.id = 'ref-' + widget_id + '-' + current_values.length;
-            sortable = jq('input[name=' + widget_id + '-sortable]').attr('value');
+            sortable = $('input[name=' + widget_id + '-sortable]').attr('value');
             if (sortable === '1') {
                 up_element = document.createElement('a');
                 up_element.title = 'Move Up';
@@ -107,8 +107,8 @@ function refdatagridbrowser_removeReference(widget_id, multi) {
         }
     }
     else {
-        jq('#' + widget_id).attr('value', "");
-        jq('#' + widget_id + '_label').attr('value', "");
+        $('#' + widget_id).attr('value', "");
+        $('#' + widget_id + '_label').attr('value', "");
     }
 }
 
@@ -150,7 +150,7 @@ function refdatagridbrowser_moveReferenceDown(self) {
     eid = elem.id.split('-');
     pos = parseInt(eid.pop(), 10);
     widget_id = eid.pop();
-    current_values = jq('#' + widget_id + ' input');
+    current_values = $('#' + widget_id + ' input');
     if ((pos + 1) === current_values.length) {
         return false;
     }
@@ -174,8 +174,8 @@ function refdatagridbrowser_moveReferenceDown(self) {
 }
 
 function showMessageRDG(message) {
-    jq('#messageTitle').text(message);
-    jq('#message').show();
+    $('#messageTitle').text(message);
+    $('#message').show();
 }
 
 function submitHistoryForm() {
@@ -186,19 +186,19 @@ function submitHistoryForm() {
 }
 
 function pushToHistory(url) {
-    var history = jq(document).data('atrb_history');
+    var history = $(document).data('atrb_history');
     history.push(url);
-    jq(document).data('atrb_history', history);
+    $(document).data('atrb_history', history);
 }
 
 function resetHistory() {
-    jq(document).data('atrb_history', []);
+    $(document).data('atrb_history', []);
 }
 
 function popFromHistory() {
-    var history = jq(document).data('atrb_history');
+    var history = $(document).data('atrb_history');
     value = history.pop();
-    jq(document).data('atrb_history', history);
+    $(document).data('atrb_history', history);
     return value;
 }
 
@@ -210,10 +210,10 @@ dataGridFieldFunctions.addReferenceDataGridRowAfter = function (currnode) {
 }
 
 function triggerTitleClass(e) {
-    var element = jq(e.target);
+    var element = $(e.target);
     var current = element.attr("value");
     var initial = element.attr("default_value");
-    if (initial == null || current == null) 
+    if (initial == null || current == null)
         return;
     if (initial == current) {
         element.attr("class", "not-changed-title-field");
@@ -224,5 +224,5 @@ function triggerTitleClass(e) {
 }
 
 function triggerOnFocusStyles(e) {
-    jq(e.target).attr("class", "changed-title-field")
+    $(e.target).attr("class", "changed-title-field")
 }

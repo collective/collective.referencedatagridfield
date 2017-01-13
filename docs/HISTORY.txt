@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.4.7-RTPlone3 (Unreleased)
+---------------------------
+- Replace unused `jq` with `$` in javascripts
+  [cekk]
+- Fix unused icons
+  [cekk]
+
 0.4.6-RTPlone3 (2014/02/26)
 ---------------------------
 - fix Products.DatagriField >= 1.9.1 (for previously versions, use 0.4.5-RTPlone3 version) [cekk]
