@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.4.7-RTPlone3 (Unreleased)
+0.4.7-RTPlone3 (2017-01-13)
 ---------------------------
 - Replace unused `jq` with `$` in javascripts
   [cekk]
